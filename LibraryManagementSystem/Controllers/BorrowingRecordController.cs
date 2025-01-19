@@ -27,6 +27,20 @@ namespace LibraryManagementSystem.Controllers
             return await _context.BorrowingRecords.ToListAsync();
         }
 
-        
+        // GET: api/BorrowingRecord
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BorrowingRecord>> GetBorrowingRecord(int id)
+        {
+            var borrowingRecord = await _context.BorrowingRecords.FindAsync(id);
+
+            if (borrowingRecord is null)
+            {
+                return NotFound();
+            }
+
+            return borrowingRecord;
+        }
+
+       
     }
 }
