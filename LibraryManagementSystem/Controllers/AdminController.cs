@@ -27,6 +27,20 @@ namespace LibraryManagementSystem.Controllers
             return await _context.Admins.ToListAsync();
         }
 
-        
+        // GET: api/Admin/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Admin>> GetAdmin(int id)
+        {
+            var admin = await _context.Admins.FindAsync(id);
+
+            if (admin is null)
+            {
+                return NotFound();
+            }
+
+            return admin;
+        }
+
+       
     }
 }
