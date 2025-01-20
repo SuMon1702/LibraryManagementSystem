@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.LibraryManagement.Utlis;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -23,7 +24,7 @@ namespace LibraryManagementSystem.Controllers
 
         // GET: api/BookList
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooksAsync(CancellationToken cs)
+        public async Task<ActionResult<Result<IEnumerable<Book>>>> GetBooksAsync(CancellationToken cs)
         {
             try
             {
@@ -34,18 +35,18 @@ namespace LibraryManagementSystem.Controllers
                     .ToListAsync(cs);
 
                 //This is not needed if returning [] is fine when no data is found.
-                if (!book.Any())
+                if (book.Count == 0)
                 {
-                    return NotFound("No book is found.");
+                    return Result<IEnumerable<Book>>.Fail("No book is found.");
                 }
 
-                return book;
+                return Result<IEnumerable<Book>>.Success(book);
 
             }
 
             catch (Exception ex)
             {
-                return BadRequest($"An error occurs: {ex.Message}");
+                return Result<IEnumerable<Book>>.Fail(ex);
             }
         }
 
@@ -57,6 +58,7 @@ namespace LibraryManagementSystem.Controllers
             {
                 var book = await _context.Books.FindAsync(id);
 
+                //Since book is a single object (not a collection),don't need to use .Any().
                 if (book is null)
                 {
                     return Result<Book>.Fail("No book is found.");
