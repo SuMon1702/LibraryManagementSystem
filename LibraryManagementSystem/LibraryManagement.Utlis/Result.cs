@@ -41,6 +41,17 @@ namespace LibraryManagementSystem.LibraryManagement.Utlis
                 IsSuccess = false
             };
         }
+
+        public static Result<T> Fail (Exception ex)
+        {
+            return new Result<T>
+            {
+                Message = ex.Message,
+                StatusCode = EnumHttpStatusCode.InternalServerError,
+                IsSuccess = false
+            };
+        }
+        
     }
 
    
