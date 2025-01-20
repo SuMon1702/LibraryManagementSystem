@@ -22,23 +22,30 @@ namespace LibraryManagementSystem.Controllers
 
         // GET: api/BookList
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooksAsync (CancellationToken cs)
         {
-            return await _context.Books.ToListAsync();
-        }
-
-        // GET: api/Book
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBook(int id)
-        {
-            var book = await _context.Books.FindAsync(id);
-
-            if (book is null)
+            try
             {
-                return NotFound("No data found");
-            }
+                var book= await _context
+                    .Books
+                    .OrderByDescending(x => x.BookId)
+                    .Where(x => !x.IsDelete)
+                    .ToListAsync(cs);
 
-            return book;
+                //This is not needed if returning [] is fine when no data is found.
+                if (!book.Any())
+                {
+                    return NotFound("No book is found.");
+                }
+
+                return book;
+                
+            }
+            
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurs: {ex.Message}");
+            }
         }
 
         
