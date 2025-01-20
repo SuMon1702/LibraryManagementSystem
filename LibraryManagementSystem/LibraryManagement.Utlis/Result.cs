@@ -31,6 +31,16 @@ namespace LibraryManagementSystem.LibraryManagement.Utlis
                 Message = message
             };
         }
+
+        public static Result<T> Fail(string message="Fail")
+        {
+            return new Result<T>
+            {
+                Message = message,
+                StatusCode = EnumHttpStatusCode.BadRequest,
+                IsSuccess = false
+            };
+        }
     }
 
    
