@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementSystem.Models;
+using LibraryManagementSystem.LibraryManagement.Utlis;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -22,11 +23,11 @@ namespace LibraryManagementSystem.Controllers
 
         // GET: api/BookList
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooksAsync (CancellationToken cs)
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooksAsync(CancellationToken cs)
         {
             try
             {
-                var book= await _context
+                var book = await _context
                     .Books
                     .OrderByDescending(x => x.BookId)
                     .Where(x => !x.IsDelete)
@@ -39,15 +40,36 @@ namespace LibraryManagementSystem.Controllers
                 }
 
                 return book;
-                
+
             }
-            
+
             catch (Exception ex)
             {
                 return BadRequest($"An error occurs: {ex.Message}");
             }
         }
 
-        
+        // GET: api/Book/
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Result<Book>>> GetBookAsync(int id)
+        {
+            try
+            {
+                var book = await _context.Books.FindAsync(id);
+
+                if (book is null)
+                {
+                    return Result<Book>.Fail("No book is found.");
+                }
+
+                return Result<Book>.Success(book);
+            }
+            catch (Exception ex)
+            {
+                return Result<Book>.Fail(ex); 
+            }
+
+
+        }
     }
 }
