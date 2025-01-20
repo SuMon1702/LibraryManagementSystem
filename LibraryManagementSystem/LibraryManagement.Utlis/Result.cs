@@ -20,6 +20,17 @@ namespace LibraryManagementSystem.LibraryManagement.Utlis
                 StatusCode = EnumHttpStatusCode.Success,
             };
         }
+
+        public static Result<T> Success (T data, string message="Success")
+        {
+            return new Result<T>
+            {
+                Data = data,
+                IsSuccess = true,
+                StatusCode = EnumHttpStatusCode.Success,
+                Message = message
+            };
+        }
     }
 
    
