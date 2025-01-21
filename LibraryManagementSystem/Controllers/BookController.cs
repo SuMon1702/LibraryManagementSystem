@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.LibraryManagement.Utlis;
 using static System.Reflection.Metadata.BlobBuilder;
+using LibraryManagementSystem.Model;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -39,9 +40,10 @@ namespace LibraryManagementSystem.Controllers
                 {
                     return Result<IEnumerable<Book>>.Fail("No book is found.");
                 }
-
-                return Result<IEnumerable<Book>>.Success(book);
-
+                else
+                {
+                    return Result<IEnumerable<Book>>.Success(book);
+                }
             }
 
             catch (Exception ex)
@@ -56,6 +58,8 @@ namespace LibraryManagementSystem.Controllers
         {
             try
             {
+                Result<Book> result;
+
                 var book = await _context.Books.FindAsync(id);
 
                 //Since book is a single object (not a collection),don't need to use .Any().
@@ -64,14 +68,41 @@ namespace LibraryManagementSystem.Controllers
                     return Result<Book>.Fail("No book is found.");
                 }
 
-                return Result<Book>.Success(book);
+                result= Result<Book>.Success(book);
+                return result;
+                
             }
             catch (Exception ex)
             {
                 return Result<Book>.Fail(ex); 
             }
+        }
 
+        [HttpPost]
+        public async Task<ActionResult<Result<Book>>> CreateBook([FromBody] BookRequestModel requestModel,CancellationToken cs)
+        {
+            try
+            {
+                Result<Book> result;
+                var model = new Book()
+                {
+                    BookTitle = requestModel.BookTitle,
+                    Author= requestModel.Author,
+                    BookQty= requestModel.BookQty,
+                    BookPrice= requestModel.BookPrice,
+                    Publisher= requestModel.Publisher
 
+                };
+                await _context.Books.AddAsync(model, cs);
+                await _context.SaveChangesAsync(cs);
+
+                result= Result<Book>.Success(model);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return Result<Book>.Fail(ex);   
+            }
         }
     }
 }
