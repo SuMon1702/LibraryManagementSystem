@@ -9,6 +9,7 @@ using LibraryManagementSystem.Models;
 using LibraryManagementSystem.LibraryManagement.Utlis;
 using static System.Reflection.Metadata.BlobBuilder;
 using LibraryManagementSystem.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -68,44 +69,78 @@ namespace LibraryManagementSystem.Controllers
                     return Result<Book>.Fail("No book is found.");
                 }
 
-                result= Result<Book>.Success(book);
+                result = Result<Book>.Success(book);
                 return result;
-                
+
             }
             catch (Exception ex)
             {
-                return Result<Book>.Fail(ex); 
+                return Result<Book>.Fail(ex);
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult<Result<Book>>> CreateBook([FromBody] Book requestModel,CancellationToken cs)
+        public async Task<ActionResult<Book>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
         {
             try
             {
-                Result<Book> result;
 
                 //If we use the scaffold model then we do not need to create this instance.
                 //But if we use the one model that we built then we need this instance
+                var model = new Book()
+                {
+                    BookTitle = requestModel.BookTitle,
+                    Author = requestModel.Author,
+                    BookQty = requestModel.BookQty,
+                    BookPrice = requestModel.BookPrice,
+                    Publisher = requestModel.Publisher
 
-                //var model = new Book()
-                //{
-                //    BookTitle = requestModel.BookTitle,
-                //    Author= requestModel.Author,
-                //    BookQty= requestModel.BookQty,
-                //    BookPrice= requestModel.BookPrice,
-                //    Publisher= requestModel.Publisher
+                };
 
-                //};
-                await _context.Books.AddAsync(requestModel, cs);
-                await _context.SaveChangesAsync(cs);
+                await _context.Books.AddAsync(model, cs);
+                var result = await _context.SaveChangesAsync(cs);
 
-                result= Result<Book>.Success(requestModel);
-                return result;
+                string message = result > 0 ? "Saving Successful" : "Saving Fail";
+                return Ok(message);
             }
             catch (Exception ex)
             {
-                return Result<Book>.Fail(ex);   
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Result<Book>>> UpdateBook(int id, BookRequestModel requestModel)
+        {
+            try
+            {
+                var item = await _context.Books.FirstOrDefaultAsync(x => x.BookId == id);
+
+               
+                if (item is null)
+                {
+                    return Result<Book>.Fail("No data found");
+                }
+
+                if (requestModel is null)
+                {
+                    return Result<Book>.Fail("Please fill all field.");
+                }
+
+                item.BookTitle = requestModel.BookTitle;
+                item.Author = requestModel.Author;
+                item.BookQty = requestModel.BookQty;
+                item.BookPrice = requestModel.BookPrice;
+                item.Publisher = requestModel.Publisher;
+
+                _context.Entry(item).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return Result<Book>.Success(item,"Updating Succeed");
+            }
+            catch (Exception ex)
+            {
+                return Result<Book>.Fail(ex);
             }
         }
     }
