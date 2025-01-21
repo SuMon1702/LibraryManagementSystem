@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem.Model
 {
-    public partial class BookRequestModel
+    public class BookRequestModel
     {
         public string BookTitle { get; set; } = null!;
 
