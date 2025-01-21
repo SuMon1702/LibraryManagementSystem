@@ -79,24 +79,28 @@ namespace LibraryManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Result<Book>>> CreateBook([FromBody] BookRequestModel requestModel,CancellationToken cs)
+        public async Task<ActionResult<Result<Book>>> CreateBook([FromBody] Book requestModel,CancellationToken cs)
         {
             try
             {
                 Result<Book> result;
-                var model = new Book()
-                {
-                    BookTitle = requestModel.BookTitle,
-                    Author= requestModel.Author,
-                    BookQty= requestModel.BookQty,
-                    BookPrice= requestModel.BookPrice,
-                    Publisher= requestModel.Publisher
 
-                };
-                await _context.Books.AddAsync(model, cs);
+                //If we use the scaffold model then we do not need to create this instance.
+                //But if we use the one model that we built then we need this instance
+
+                //var model = new Book()
+                //{
+                //    BookTitle = requestModel.BookTitle,
+                //    Author= requestModel.Author,
+                //    BookQty= requestModel.BookQty,
+                //    BookPrice= requestModel.BookPrice,
+                //    Publisher= requestModel.Publisher
+
+                //};
+                await _context.Books.AddAsync(requestModel, cs);
                 await _context.SaveChangesAsync(cs);
 
-                result= Result<Book>.Success(model);
+                result= Result<Book>.Success(requestModel);
                 return result;
             }
             catch (Exception ex)
