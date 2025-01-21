@@ -110,13 +110,12 @@ namespace LibraryManagementSystem.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Result<Book>>> UpdateBook(int id, BookRequestModel requestModel)
+        public async Task<ActionResult<Result<Book>>>UpdateBook(int id, BookRequestModel requestModel)
         {
             try
             {
                 var item = await _context.Books.FirstOrDefaultAsync(x => x.BookId == id);
 
-               
                 if (item is null)
                 {
                     return Result<Book>.Fail("No data found");
@@ -137,6 +136,29 @@ namespace LibraryManagementSystem.Controllers
                 await _context.SaveChangesAsync();
 
                 return Result<Book>.Success(item,"Updating Succeed");
+            }
+            catch (Exception ex)
+            {
+                return Result<Book>.Fail(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Result<Book>>> DeleteBook (int id)
+        {
+            try
+            {
+                var item = await _context.Books.FirstOrDefaultAsync(x => x.BookId == id);
+                if (item is null)
+                {
+                    return Result<Book>.Fail("No data found");
+                }
+
+                _context.Books.Remove(item);
+                _context.Entry(item).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return Result<Book>.Success(item,"Deleted successfully");
             }
             catch (Exception ex)
             {
