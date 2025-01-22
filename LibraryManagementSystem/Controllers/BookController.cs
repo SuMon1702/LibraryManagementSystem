@@ -36,6 +36,8 @@ namespace LibraryManagementSystem.Controllers
                     .Where(x => !x.IsActive)
                     .ToListAsync(cs);
 
+
+
                 //This is not needed if returning [] is fine when no data is found.
                 if (book.Count == 0)
                 {
@@ -148,7 +150,7 @@ namespace LibraryManagementSystem.Controllers
                 var item = await _context.Books.FirstOrDefaultAsync(x => x.BookId == id);
                 if (item is null)
                 {
-                    return Result<Book>.Fail("No data found");
+                    return Result<Book>.Fail("No book is found");
                 }
 
                 item.IsActive = false;
