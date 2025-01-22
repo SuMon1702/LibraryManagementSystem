@@ -33,7 +33,7 @@ namespace LibraryManagementSystem.Controllers
                 var book = await _context
                     .Books
                     .OrderByDescending(x => x.BookId)
-                    .Where(x => !x.IsDelete)
+                    .Where(x => !x.IsActive)
                     .ToListAsync(cs);
 
                 //This is not needed if returning [] is fine when no data is found.
@@ -110,7 +110,7 @@ namespace LibraryManagementSystem.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Result<Book>>>UpdateBook(int id, BookRequestModel requestModel)
+        public async Task<ActionResult<Result<Book>>>UpdateBook(int id, BookModel model)
         {
             try
             {
@@ -121,16 +121,13 @@ namespace LibraryManagementSystem.Controllers
                     return Result<Book>.Fail("No data found");
                 }
 
-                if (requestModel is null)
+                if (model is null)
                 {
                     return Result<Book>.Fail("Please fill all field.");
                 }
-
-                item.BookTitle = requestModel.BookTitle;
-                item.Author = requestModel.Author;
-                item.BookQty = requestModel.BookQty;
-                item.BookPrice = requestModel.BookPrice;
-                item.Publisher = requestModel.Publisher;
+                item.BookQty = model.BookQty;
+                item.BookPrice = model.BookPrice;
+               
 
                 _context.Entry(item).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -154,9 +151,11 @@ namespace LibraryManagementSystem.Controllers
                     return Result<Book>.Fail("No data found");
                 }
 
-                _context.Books.Remove(item);
-                _context.Entry(item).State = EntityState.Modified;
-                _context.SaveChanges();
+                item.IsActive = false;
+                //_context.Books.Remove(item);
+                _context.Entry(item).CurrentValues.SetValues(item);
+             //   _context.Entry(item).State = EntityState.Modified;
+               await _context.SaveChangesAsync();
 
                 return Result<Book>.Success(item,"Deleted successfully");
             }
