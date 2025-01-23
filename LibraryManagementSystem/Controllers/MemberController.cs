@@ -100,5 +100,28 @@ namespace LibraryManagementSystem.Controllers
                 return Result<TblMember>.Fail("An error occurred during member login");
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Result<TblMember>>> UpdateMember(int id, MemberUpdateModel model)
+        {
+            var member = await _context.TblMembers.FirstOrDefaultAsync(x => x.MemberId == id);
+
+            if (member is null)
+            {
+                return Result<TblMember>.Fail("No member is found");
+            }
+
+            member.MemberName = model.MemberName;
+            member.PhoneNumber = model.PhoneNumber;
+            member.Email = model.Email;
+            member.Address = model.Address;
+            member.MembershipType = model.MembershipType.ToString();
+            member.Password = model.Password;
+
+            _context.Entry(member).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Result<TblMember>.Success(member, "Updating succeed");
+        }
     }
 }
