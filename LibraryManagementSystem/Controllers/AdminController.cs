@@ -69,5 +69,24 @@ public class AdminController : ControllerBase
             return Result<TblAdmin>.Fail("An error occurred during admin login.");
         }
     }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Result<TblAdmin>>> UpdateAdmin(int id, AdminModel model)
+    {
+        var item = await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId == id);
+        if (item is null)
+        {
+            return Result<TblAdmin>.Fail("No item is found");
+        }
+        
+        item.Address= model.Address;
+        item.AdminName= model.AdminName;
+
+        _context.Entry(item).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+
+        return Result<TblAdmin>.Success(item, "Updating succeed");
+    }
+
 }
 
