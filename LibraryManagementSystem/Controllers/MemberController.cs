@@ -23,5 +23,16 @@ namespace LibraryManagementSystem.Controllers
             var member= await _context.TblMembers.ToListAsync(cs);
             return Result<List<TblMember>>.Success(member);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Result<TblMember>>> GetMemberAsync(int id)
+        {
+            var member= await _context.TblCategories.FindAsync(id);
+            if(member is null)
+            {
+                return Result<TblMember>.Fail("No member is found");
+            }
+            return Result<TblMember>.Success("Succeed");
+        }
     }
 }
