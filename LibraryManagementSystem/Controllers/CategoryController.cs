@@ -24,6 +24,17 @@ namespace LibraryManagementSystem.Controllers
             return Result<List<TblCategory>>.Success(category);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Result<TblCategory>>> GetCategoryAsync(int id)
+        {
+            var category = await _context.TblCategories.FindAsync(id);
+            if (category == null)
+            {
+                return Result<TblCategory>.Fail("No data is found");
+            }
+            return Result<TblCategory>.Success(category);
+        }
+
 
     }
     
