@@ -1,8 +1,10 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Design;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -35,7 +37,33 @@ namespace LibraryManagementSystem.Controllers
             return Result<TblCategory>.Success(category);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Result<TblCategory>>> CreateCategory([FromBody] CategoryModel model, CancellationToken cs)
+        {
+            try
+            {
+                var category = new TblCategory()
+                {
+                    CategoryName = model.CategoryName
+                };
 
+                await _context.TblCategories.AddAsync(category,cs);
+
+               if(string.IsNullOrEmpty(model.CategoryName))
+                {
+                    return Result<TblCategory>.Fail("Category name must be filled");
+                }
+
+                await _context.SaveChangesAsync(cs);
+
+                return Result<TblCategory>.Success(category);
+                
+            }
+            catch (Exception ex)
+            {
+                return Result<TblCategory>.Fail(ex.Message);
+            }
+        }
     }
     
 }
