@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+using LibraryManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -13,6 +10,7 @@ namespace LibraryManagementSystem.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
+
         private readonly AppDbContext _context;
 
         public AdminController(AppDbContext context)
@@ -20,27 +18,12 @@ namespace LibraryManagementSystem.Controllers
             _context = context;
         }
 
-        // GET: api/AdminList
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
+        public async Task<ActionResult<Result<List<TblAdmin>>>> GetAdmin()
         {
-            return await _context.Admins.ToListAsync();
+         
+                var item = await _context.TblAdmins.ToListAsync();
+                return Result<List<TblAdmin>>.Success(item);
         }
-
-        // GET: api/Admin/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Admin>> GetAdmin(int id)
-        {
-            var admin = await _context.Admins.FindAsync(id);
-
-            if (admin is null)
-            {
-                return NotFound();
-            }
-
-            return admin;
-        }
-
-       
     }
 }
