@@ -6,10 +6,10 @@
 
         public string Author { get; set; } = null!;
 
-        public int BookQty { get; set; }
+        public int Quantity { get; set; }
 
         public string Publisher { get; set; } = null!;
 
-        public decimal BookPrice { get; set; }
+        public decimal BookAmount { get; set; }
     }
 }
