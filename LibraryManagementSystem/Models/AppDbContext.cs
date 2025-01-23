@@ -104,6 +104,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.CategoryName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
