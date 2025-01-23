@@ -123,5 +123,22 @@ namespace LibraryManagementSystem.Controllers
 
             return Result<TblMember>.Success(member, "Updating succeed");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Result<TblMember>>> DeleteMember(int id)
+        {
+            var member = await _context.TblMembers.FirstOrDefaultAsync(x => x.MemberId == id);
+
+            if (member is null)
+            {
+                return Result<TblMember>.Fail("No member is found");
+            }
+
+            member.IsActive = false;
+            _context.Entry(member).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Result<TblMember>.Success("Deleted successfully");
+        }
     }
 }
