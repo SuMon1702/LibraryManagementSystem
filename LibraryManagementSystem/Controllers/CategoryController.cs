@@ -6,89 +6,92 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing.Design;
 
-namespace LibraryManagementSystem.Controllers;
-
-[Route("api/[controller]")]
-[ApiController]
-public class CategoryController : ControllerBase
+namespace LibraryManagementSystem.Controllers
 {
-    private readonly AppDbContext _context;
-
-    public CategoryController(AppDbContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CategoryController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly AppDbContext _context;
 
-    [HttpGet]
-    public async Task<ActionResult<Result<List<TblCategory>>>> GetCategoriesAsync(CancellationToken cs)
-    {
-        var category = await _context.TblCategories.ToListAsync(cs);
-        return Result<List<TblCategory>>.Success(category);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Result<TblCategory>>> GetCategoryAsync(int id)
-    {
-        var category = await _context.TblCategories.FindAsync(id);
-        if (category == null)
+        public CategoryController(AppDbContext context)
         {
-            return Result<TblCategory>.Fail("No data is found");
+            _context = context;
         }
-        return Result<TblCategory>.Success(category);
-    }
 
-    [HttpPost]
-    public async Task<ActionResult<Result<TblCategory>>> CreateCategoryAsync([FromBody] CategoryModel model, CancellationToken cs)
-    {
-        try
+        [HttpGet]
+        public async Task<ActionResult<Result<List<TblCategory>>>> GetCategoriesAsync(CancellationToken cs)
         {
-            var category = new TblCategory()
-            {
-                CategoryName = model.CategoryName
-            };
+            var category = await _context.TblCategories.ToListAsync(cs);
+            return Result<List<TblCategory>>.Success(category);
+        }
 
-            await _context.TblCategories.AddAsync(category,cs);
-
-           if(string.IsNullOrEmpty(model.CategoryName))
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Result<TblCategory>>> GetCategoryAsync(int id)
+        {
+            var category = await _context.TblCategories.FindAsync(id);
+            if (category == null)
             {
-                return Result<TblCategory>.Fail("Category name must be filled");
+                return Result<TblCategory>.Fail("No data is found");
+            }
+            return Result<TblCategory>.Success(category);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Result<TblCategory>>> CreateCategoryAsync([FromBody] CategoryModel model, CancellationToken cs)
+        {
+            try
+            {
+           // This instance maps the valid request model data to the TblCategory entity
+                var category = new TblCategory()
+                {
+                    CategoryName = model.CategoryName
+                };
+
+                await _context.TblCategories.AddAsync(category,cs);
+
+               if(string.IsNullOrEmpty(model.CategoryName))
+                {
+                    return Result<TblCategory>.Fail("Category name must be filled");
+                }
+
+                await _context.SaveChangesAsync(cs);
+
+                return Result<TblCategory>.Success(category);
+            
+            }
+            catch (Exception ex)
+            {
+                return Result<TblCategory>.Fail(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Result<TblCategory>>> DeleteCategoryAsync(int id)
+        {
+            var category = await _context.TblCategories.FindAsync(id);
+
+            if(category is null)
+            {
+                return Result<TblCategory>.Fail("Category is not found.");
             }
 
-            await _context.SaveChangesAsync(cs);
+            // Check if any books are linked to this category
+            var booksInCategory = await _context.TblBooks.AnyAsync(b => b.CategoryId == id);
+            if (booksInCategory)
+            {
+                return BadRequest("Cannot delete the category because books are linked to it.");
+            }
 
-            return Result<TblCategory>.Success(category);
-            
-        }
-        catch (Exception ex)
-        {
-            return Result<TblCategory>.Fail(ex.Message);
+            // Soft delete the category
+            category.IsActive = false;
+            _context.TblCategories.Update(category);
+            await _context.SaveChangesAsync();
+
+            return Result<TblCategory>.Success("Deleted successfully");
+
         }
     }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<Result<TblCategory>>> DeleteCategoryAsync(int id)
-    {
-        var category = await _context.TblCategories.FindAsync(id);
-        if(category is null)
-        {
-            return Result<TblCategory>.Fail("Category is not found.");
-        }
 
-        // Check if any books are linked to this category
-        var booksInCategory = await _context.TblBooks.AnyAsync(b => b.CategoryId == id);
-        if (booksInCategory)
-        {
-            return BadRequest("Cannot delete the category because books are linked to it.");
-        }
-
-        // Soft delete the category
-        category.IsActive = false;
-        _context.TblCategories.Update(category);
-        await _context.SaveChangesAsync();
-
-        return Result<TblCategory>.Success("Deleted successfully");
-
-    }
 }
-
-
