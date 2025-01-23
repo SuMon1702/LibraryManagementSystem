@@ -64,6 +64,31 @@ namespace LibraryManagementSystem.Controllers
                 return Result<TblCategory>.Fail(ex.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Result<TblCategory>>> DeleteCategory(int id)
+        {
+            var category = await _context.TblCategories.FindAsync(id);
+            if(category is null)
+            {
+                return Result<TblCategory>.Fail("Category is not found.");
+            }
+
+            // Check if any books are linked to this category
+            var booksInCategory = await _context.TblBooks.AnyAsync(b => b.CategoryId == id);
+            if (booksInCategory)
+            {
+                return BadRequest("Cannot delete the category because books are linked to it.");
+            }
+
+            // Soft delete the category
+            category.IsActive = false;
+            _context.TblCategories.Update(category);
+            await _context.SaveChangesAsync();
+
+            return Result<TblCategory>.Success("Deleted successfully");
+
+        }
     }
     
 }
