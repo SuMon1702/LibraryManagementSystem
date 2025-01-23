@@ -129,6 +129,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.MembershipType)
                 .HasMaxLength(30)
                 .IsUnicode(false);
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .IsUnicode(false);
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(30)
                 .IsUnicode(false);
