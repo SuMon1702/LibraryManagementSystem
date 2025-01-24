@@ -152,7 +152,11 @@ public class BookController : ControllerBase
                 return Result<TblBook>.Fail("No data found");
             }
 
-            _context.TblBooks.Remove(item);
+            var isLinkedToTransactions = await _context.TblBorrowingRecords.AnyAsync(t => t.BookId == id && t.ReturnDate == null);
+            if (isLinkedToTransactions)
+                return BadRequest("Cannot delete the book as it is currently borrowed.");
+
+            item.IsActive = false;
             _context.Entry(item).State = EntityState.Modified;
            await _context.SaveChangesAsync();
 
