@@ -11,11 +11,11 @@ public partial class TblBorrowingRecord
 
     public int BookId { get; set; }
 
-    public DateOnly BorrowDate { get; set; }
+    public DateTime BorrowDate { get; set; }
 
-    public DateOnly? ReturnDate { get; set; }
+    public DateTime? ReturnDate { get; set; }
 
-    public DateOnly DueDate { get; set; }
+    public DateTime DueDate { get; set; }
 
     public int Quantity { get; set; }
 
