@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Diagnostics.Metrics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryManagementSystem.Controllers
@@ -47,6 +48,10 @@ namespace LibraryManagementSystem.Controllers
                 return Result<TblMember>.Fail("Invalid Member data.");
             }
 
+            var existingMember = await _context.TblMembers.FirstOrDefaultAsync(m => m.Email == regModel.Email);
+            if (existingMember != null)
+                return BadRequest("A member with this email already exists.");
+
             //All the data annotations should be filled since they are written [Required], 
             if (!ModelState.IsValid)
             {
@@ -55,6 +60,8 @@ namespace LibraryManagementSystem.Controllers
 
             if (!Enum.IsDefined(typeof(MemberShipType), regModel.MembershipType))
                 return BadRequest("Invalid MembershipType. Allowed values are 'Premium' and 'Standard'.");
+            
+
 
             var model = new TblMember()
             {
@@ -65,15 +72,13 @@ namespace LibraryManagementSystem.Controllers
                 PhoneNumber = regModel.PhoneNumber,
                 MembershipType = regModel.MembershipType.ToString(),
                 MembershipDate = DateTime.Now, //Set the MembershipDate to the current date and time
-                ExpireDate = DateTime.Now.AddMonths(6)
+                ExpireDate = DateTime.Now.AddMonths(6) // Default 6 month membership validation
             };
-
-
 
             await _context.TblMembers.AddAsync(model);
             await _context.SaveChangesAsync();
 
-            return Result<TblMember>.Success(model);
+            return Result<TblMember>.Success(model,"Member registered successfully.");
         }
 
         [HttpPost("Member_Login")]
