@@ -51,7 +51,7 @@ namespace LibraryManagementSystem.Controllers
                 BookPrice = book.BookAmount,
                 TotalAmount = model.Quantity * book.BookAmount,
                 BorrowDate = DateTime.Now,
-                DueDate = DateTime.Now.AddDays(15),
+                DueDate = DateTime.Now.AddDays(14),
                 ReturnDate = null
 
             };
@@ -66,7 +66,46 @@ namespace LibraryManagementSystem.Controllers
             return Result<TblBorrowingRecord>.Success("Book borrowed successfully");
 
         }
+
+        [HttpPut("ReturnBook/{id}")]
+        public async Task<ActionResult<Result<TblBorrowingRecord>>> ReturnBook(int id)
+        {
+            var borrowingRecord = await _context.TblBorrowingRecords.FindAsync(id);
+
+            if (borrowingRecord is null)
+            {
+                return Result<TblBorrowingRecord>.Fail("No record found.");
+            }
+
+            var book = await _context.TblBooks.FindAsync(borrowingRecord.BookId);
+            if (book is null)
+            {
+                return Result<TblBorrowingRecord>.Fail("No book found.");
+            }
+            borrowingRecord.ReturnDate = DateTime.Now;
+
+
+            // Check if the return date is after the due date and calculate excess days
+            if (borrowingRecord.ReturnDate.HasValue && borrowingRecord.DueDate.HasValue && borrowingRecord.ReturnDate > borrowingRecord.DueDate)
+            {
+                TimeSpan timeSpan = borrowingRecord.ReturnDate.Value - borrowingRecord.DueDate.Value;  // Time span between return date and due date
+                int exceedDays = timeSpan.Days;  // Get the number of exceeded days
+
+                if (exceedDays > 0)
+                {
+                    borrowingRecord.TotalAmount += exceedDays * 10; // Add fine for the exceeded days
+                }
+            }
+
+                // Add returned books to the total quantity
+                book.Quantity += borrowingRecord.Quantity;
+
+                await _context.SaveChangesAsync();
+
+                return Result<TblBorrowingRecord>.Success("Book returned successfully");
+            
+        }
     }
 }
 
-    
+
