@@ -13,7 +13,7 @@ public partial class TblBorrowingRecord
 
     public DateOnly BorrowDate { get; set; }
 
-    public DateOnly ReturnDate { get; set; }
+    public DateOnly? ReturnDate { get; set; }
 
     public DateOnly DueDate { get; set; }
 
