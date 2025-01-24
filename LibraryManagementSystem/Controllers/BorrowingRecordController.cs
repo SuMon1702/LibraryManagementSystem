@@ -105,6 +105,19 @@ namespace LibraryManagementSystem.Controllers
                 return Result<TblBorrowingRecord>.Success("Book returned successfully");
             
         }
+
+        [HttpGet("GetBorrowingRecords")]
+        public async Task<ActionResult<Result<List<TblBorrowingRecord>>>> GetBorrowingRecords()
+        {
+            var borrowingRecords = await _context.TblBorrowingRecords.ToListAsync();
+
+            if (borrowingRecords.Count == 0)
+            {
+                return Result<List<TblBorrowingRecord>>.Fail("No records found.");
+            }
+
+            return Result<List<TblBorrowingRecord>>.Success(borrowingRecords);
+        }
     }
 }
 
