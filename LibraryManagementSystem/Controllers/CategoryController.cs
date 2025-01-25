@@ -72,6 +72,7 @@ public class CategoryController : ControllerBase
     }
     #endregion
 
+    #region DeleteCategoryAsync
     [HttpDelete("{id}")]
     public async Task<ActionResult<Result<TblCategory>>> DeleteCategoryAsync(int id)
     {
@@ -95,6 +96,6 @@ public class CategoryController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Result<TblCategory>.Success("Deleted successfully");
-
     }
+    #endregion
 }
