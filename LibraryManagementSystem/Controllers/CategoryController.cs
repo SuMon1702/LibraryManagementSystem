@@ -17,13 +17,17 @@ public class CategoryController : ControllerBase
         _context = context;
     }
 
+    #region GetCategoriesAsync
     [HttpGet]
     public async Task<ActionResult<Result<List<TblCategory>>>> GetCategoriesAsync(CancellationToken cs)
     {
         var category = await _context.TblCategories.ToListAsync(cs);
         return Result<List<TblCategory>>.Success(category);
     }
+    #endregion
 
+
+    #region GetCategoryAsync
     [HttpGet("{id}")]
     public async Task<ActionResult<Result<TblCategory>>> GetCategoryAsync(int id)
     {
@@ -34,7 +38,10 @@ public class CategoryController : ControllerBase
         }
         return Result<TblCategory>.Success(category);
     }
+    #endregion
 
+
+    #region CreateCategoryAsync
     [HttpPost]
     public async Task<ActionResult<Result<TblCategory>>> CreateCategoryAsync([FromBody] CategoryModel model, CancellationToken cs)
     {
@@ -63,6 +70,7 @@ public class CategoryController : ControllerBase
             return Result<TblCategory>.Fail(ex.Message);
         }
     }
+    #endregion
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<Result<TblCategory>>> DeleteCategoryAsync(int id)
