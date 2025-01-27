@@ -19,6 +19,7 @@ public class AdminController : ControllerBase
         _context = context;
     }
 
+    #region GetAdminsAsync
     [HttpGet]
     public async Task<ActionResult<Result<List<TblAdmin>>>> GetAdminsAsync()
     {
@@ -26,7 +27,10 @@ public class AdminController : ControllerBase
         var item = await _context.TblAdmins.ToListAsync();
         return Result<List<TblAdmin>>.Success(item);
     }
+    #region
 
+
+    #region GetAdminAsync
     [HttpGet("{id}")]
     public async Task<ActionResult<Result<TblAdmin>>> GetAdminAsync(int id)
     {
@@ -39,6 +43,7 @@ public class AdminController : ControllerBase
 
         return Result<TblAdmin>.Success(item);
     }
+    #endregion
 
     [HttpPost("admin_Login")]
     public async Task<ActionResult<Result<TblAdmin>>> AdminLogin([FromBody] AdminLoginModel login)
