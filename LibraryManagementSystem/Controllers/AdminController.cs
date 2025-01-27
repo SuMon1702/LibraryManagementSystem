@@ -27,7 +27,7 @@ public class AdminController : ControllerBase
         var item = await _context.TblAdmins.ToListAsync();
         return Result<List<TblAdmin>>.Success(item);
     }
-    #region
+    #endregion
 
 
     #region GetAdminAsync
@@ -45,6 +45,8 @@ public class AdminController : ControllerBase
     }
     #endregion
 
+
+    #region AdminLogin
     [HttpPost("admin_Login")]
     public async Task<ActionResult<Result<TblAdmin>>> AdminLogin([FromBody] AdminLoginModel login)
     {
@@ -74,7 +76,10 @@ public class AdminController : ControllerBase
             return Result<TblAdmin>.Fail("An error occurred during admin login.");
         }
     }
+    #endregion
 
+
+    #region 
     [HttpPut("{id}")]
     public async Task<ActionResult<Result<TblAdmin>>> UpdateAdmin(int id, AdminModel model)
     {
@@ -83,15 +88,16 @@ public class AdminController : ControllerBase
         {
             return Result<TblAdmin>.Fail("No item is found");
         }
-        
-        item.Address= model.Address;
-        item.AdminName= model.AdminName;
+
+        item.Address = model.Address;
+        item.AdminName = model.AdminName;
 
         _context.Entry(item).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
         return Result<TblAdmin>.Success(item, "Updating succeed");
     }
+    #endregion
 
 }
 
