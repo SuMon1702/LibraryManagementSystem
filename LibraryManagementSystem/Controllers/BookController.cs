@@ -17,6 +17,7 @@ namespace LibraryManagementSystem.Controllers
             _context = context;
         }
 
+        #region GetBooksAsync
         // GET: api/BookList
         [HttpGet]
         public async Task<ActionResult<Result<IEnumerable<TblBook>>>> GetBooksAsync(CancellationToken cs)
@@ -45,6 +46,7 @@ namespace LibraryManagementSystem.Controllers
                 return Result<IEnumerable<TblBook>>.Fail(ex);
             }
         }
+        #endregion
 
         // GET: api/Book/
         [HttpGet("{id}")]
