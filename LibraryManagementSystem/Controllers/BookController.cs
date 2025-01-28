@@ -48,6 +48,7 @@ namespace LibraryManagementSystem.Controllers
         }
         #endregion
 
+        #region GetBookAsync
         // GET: api/Book/
         [HttpGet("{id}")]
         public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
@@ -73,6 +74,8 @@ namespace LibraryManagementSystem.Controllers
                 return Result<TblBook>.Fail(ex);
             }
         }
+        #endregion
+
 
         [HttpPost]
         public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
