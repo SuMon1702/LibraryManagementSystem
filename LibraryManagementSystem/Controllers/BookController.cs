@@ -1,170 +1,164 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.LibraryManagement.Utlis;
-using static System.Reflection.Metadata.BlobBuilder;
 using LibraryManagementSystem.Model;
-using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace LibraryManagementSystem.Controllers;
-
-[Route("api/[controller]")]
-[ApiController]
-public class BookController : ControllerBase
+namespace LibraryManagementSystem.Controllers
 {
-    private readonly AppDbContext _context;
-
-    public BookController(AppDbContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BookController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly AppDbContext _context;
 
-    // GET: api/BookList
-    [HttpGet]
-    public async Task<ActionResult<Result<IEnumerable<TblBook>>>> GetBooksAsync(CancellationToken cs)
-    {
-        try
+        public BookController(AppDbContext context)
         {
-            var book = await _context
-                .TblBooks
-                .OrderByDescending(x => x.BookId)
-                .Where(x => !x.IsActive)
-                .ToListAsync(cs);
-
-            //This is not needed if returning [] is fine when no data is found.
-            if (book.Count == 0)
-            {
-                return Result<IEnumerable<TblBook>>.Fail("No book is found.");
-            }
-            else
-            {
-                return Result<IEnumerable<TblBook>>.Success(book);
-            }
+            _context = context;
         }
 
-        catch (Exception ex)
+        // GET: api/BookList
+        [HttpGet]
+        public async Task<ActionResult<Result<IEnumerable<TblBook>>>> GetBooksAsync(CancellationToken cs)
         {
-            return Result<IEnumerable<TblBook>>.Fail(ex);
-        }
-    }
-
-    // GET: api/Book/
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
-    {
-        try
-        {
-            Result<TblBook> result;
-
-            var book = await _context.TblBooks.FindAsync(id);
-
-            //Since book is a single object (not a collection),don't need to use .Any().
-            if (book is null)
+            try
             {
-                return Result<TblBook>.Fail("No book is found.");
+                var book = await _context
+                    .TblBooks
+                    .OrderByDescending(x => x.BookId)
+                    .Where(x => !x.IsActive)
+                    .ToListAsync(cs);
+
+                //This is not needed if returning [] is fine when no data is found.
+                if (book.Count == 0)
+                {
+                    return Result<IEnumerable<TblBook>>.Fail("No book is found.");
+                }
+                else
+                {
+                    return Result<IEnumerable<TblBook>>.Success(book);
+                }
             }
 
-            result = Result<TblBook>.Success(book);
-            return result;
-
-        }
-        catch (Exception ex)
-        {
-            return Result<TblBook>.Fail(ex);
-        }
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
-    {
-        try
-        {
-
-            //If we use the scaffold model then we do not need to create this instance.
-            //But if we use the one model that we built then we need this instance
-            var model = new TblBook()
+            catch (Exception ex)
             {
-                BookTitle = requestModel.BookTitle,
-                Author = requestModel.Author,
-                Quantity = requestModel.Quantity,
-                BookAmount = requestModel.BookAmount,
-                Publisher = requestModel.Publisher
-
-            };
-
-            await _context.TblBooks.AddAsync(model, cs);
-            var result = await _context.SaveChangesAsync(cs);
-
-            string message = result > 0 ? "Saving Successful" : "Saving Fail";
-            return Ok(message);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex);
-        }
-    }
-
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Result<TblBook>>>UpdateBook(int id, BookModel model)
-    {
-        try
-        {
-            var item = await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id);
-
-            if (item is null)
-            {
-                return Result<TblBook>.Fail("No data found");
+                return Result<IEnumerable<TblBook>>.Fail(ex);
             }
+        }
 
-            if (model is null)
+        // GET: api/Book/
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
+        {
+            try
             {
-                return Result<TblBook>.Fail("Please fill all field.");
-            }
+                Result<TblBook> result;
 
-            item.Quantity = model.Quantity;
-            item.BookAmount = model.BookAmount;
+                var book = await _context.TblBooks.FindAsync(id);
+
+                //Since book is a single object (not a collection),don't need to use .Any().
+                if (book is null)
+                {
+                    return Result<TblBook>.Fail("No book is found.");
+                }
+
+                result = Result<TblBook>.Success(book);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                return Result<TblBook>.Fail(ex);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
+        {
+            try
+            {
+
+                //If we use the scaffold model then we do not need to create this instance.
+                //But if we use the one model that we built then we need this instance
+                var model = new TblBook()
+                {
+                    BookTitle = requestModel.BookTitle,
+                    Author = requestModel.Author,
+                    Quantity = requestModel.Quantity,
+                    BookAmount = requestModel.BookAmount,
+                    Publisher = requestModel.Publisher
+
+                };
+
+                await _context.TblBooks.AddAsync(model, cs);
+                var result = await _context.SaveChangesAsync(cs);
+
+                string message = result > 0 ? "Saving Successful" : "Saving Fail";
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Result<TblBook>>>UpdateBook(int id, BookModel model)
+        {
+            try
+            {
+                var item = await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id);
+
+                if (item is null)
+                {
+                    return Result<TblBook>.Fail("No data found");
+                }
+
+                if (model is null)
+                {
+                    return Result<TblBook>.Fail("Please fill all field.");
+                }
+
+                item.Quantity = model.Quantity;
+                item.BookAmount = model.BookAmount;
            
 
-            _context.Entry(item).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+                _context.Entry(item).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
-            return Result<TblBook>.Success(item,"Updating Succeed");
-        }
-        catch (Exception ex)
-        {
-            return Result<TblBook>.Fail(ex);
-        }
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<Result<TblBook>>> DeleteBook (int id)
-    {
-        try
-        {
-            var item = await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id);
-            if (item is null)
-            {
-                return Result<TblBook>.Fail("No data found");
+                return Result<TblBook>.Success(item,"Updating Succeed");
             }
-
-            var isLinkedToTransactions = await _context.TblBorrowingRecords.AnyAsync(t => t.BookId == id && t.ReturnDate == null);
-            if (isLinkedToTransactions)
-                return BadRequest("Cannot delete the book as it is currently borrowed.");
-
-            item.IsActive = false;
-            _context.Entry(item).State = EntityState.Modified;
-           await _context.SaveChangesAsync();
-
-            return Result<TblBook>.Success(item,"Deleted successfully");
+            catch (Exception ex)
+            {
+                return Result<TblBook>.Fail(ex);
+            }
         }
-        catch (Exception ex)
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Result<TblBook>>> DeleteBook (int id)
         {
-            return Result<TblBook>.Fail(ex);
+            try
+            {
+                var item = await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id);
+                if (item is null)
+                {
+                    return Result<TblBook>.Fail("No data found");
+                }
+
+                var isLinkedToTransactions = await _context.TblBorrowingRecords.AnyAsync(t => t.BookId == id && t.ReturnDate == null);
+                if (isLinkedToTransactions)
+                    return BadRequest("Cannot delete the book as it is currently borrowed.");
+
+                item.IsActive = false;
+                _context.Entry(item).State = EntityState.Modified;
+               await _context.SaveChangesAsync();
+
+                return Result<TblBook>.Success(item,"Deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                return Result<TblBook>.Fail(ex);
+            }
         }
     }
 }
