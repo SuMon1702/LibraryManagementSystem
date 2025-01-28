@@ -76,7 +76,7 @@ namespace LibraryManagementSystem.Controllers
         }
         #endregion
 
-
+        #region CreateBook
         [HttpPost]
         public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
         {
@@ -106,6 +106,7 @@ namespace LibraryManagementSystem.Controllers
                 return BadRequest(ex);
             }
         }
+        #endregions
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Result<TblBook>>>UpdateBook(int id, BookModel model)
