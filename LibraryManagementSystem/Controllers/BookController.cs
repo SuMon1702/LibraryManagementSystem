@@ -106,8 +106,10 @@ namespace LibraryManagementSystem.Controllers
                 return BadRequest(ex);
             }
         }
-        #endregions
+        #endregion
 
+
+        #region UpdateBook
         [HttpPut("{id}")]
         public async Task<ActionResult<Result<TblBook>>>UpdateBook(int id, BookModel model)
         {
@@ -139,7 +141,9 @@ namespace LibraryManagementSystem.Controllers
                 return Result<TblBook>.Fail(ex);
             }
         }
+        #endregion
 
+        #region DeleteBook
         [HttpDelete("{id}")]
         public async Task<ActionResult<Result<TblBook>>> DeleteBook (int id)
         {
@@ -166,5 +170,6 @@ namespace LibraryManagementSystem.Controllers
                 return Result<TblBook>.Fail(ex);
             }
         }
+        #endregion
     }
 }
