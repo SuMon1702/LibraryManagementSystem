@@ -16,5 +16,10 @@ namespace LibraryManagementSystem.Repositories
         {
             return await _context.TblBooks.Where(x => !x.IsActive).ToListAsync(cs);
         }
+
+        public async Task<TblBook> GetBookAsync(int id)
+        {
+            return await _context.TblBooks.FindAsync(id);
+        }
     }
 }
