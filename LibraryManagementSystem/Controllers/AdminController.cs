@@ -42,37 +42,14 @@ public class AdminController : ControllerBase
     #endregion
 
 
-    //#region AdminLogin
-    //[HttpPost("admin_Login")]
-    //public async Task<ActionResult<Result<TblAdmin>>> AdminLogin([FromBody] AdminLoginModel login)
-    //{
-    //    try
-    //    {
-    //        if (login is null)
-    //        {
-    //            return Result<TblAdmin>.Fail("Invalid Login");
-    //        }
-
-    //        if (string.IsNullOrWhiteSpace(login.Email) || string.IsNullOrWhiteSpace(login.Password))
-    //        {
-    //            return Result<TblAdmin>.Fail("Email and password fields cannot be empty.");
-    //        }
-
-    //        var admin = await _context.TblAdmins.FirstOrDefaultAsync(l => l.Email == login.Email && l.Password == login.Password);
-
-    //        if (admin is null)
-    //        {
-    //            return Result<TblAdmin>.Fail("Invalid email and password");
-    //        }
-
-    //        return Result<TblAdmin>.Success(admin, "Login is succeed");
-    //    }
-    //    catch (Exception)
-    //    {
-    //        return Result<TblAdmin>.Fail("An error occurred during admin login.");
-    //    }
-    //}
-    //#endregion
+    #region AdminLogin
+    [HttpPost("admin_Login")]
+    public async Task<ActionResult<Result<TblAdmin>>> AdminLogin([FromBody] AdminLoginModel login)
+    {
+        var result = await _service.AdminLogin(login);
+        return result;
+    }
+    #endregion
 
 
     //#region 
