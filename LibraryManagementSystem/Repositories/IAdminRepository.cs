@@ -5,6 +5,6 @@ namespace LibraryManagementSystem.Repositories
     public interface IAdminRepository
     {
         Task<List<TblAdmin>> GetAdminsAsync();
-        
+        Task<TblAdmin?> GetAdminByIdAsync(int id);
     }
 }
