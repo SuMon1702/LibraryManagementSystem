@@ -17,6 +17,9 @@ namespace LibraryManagementSystem.Repositories
             return await _context.TblAdmins.ToListAsync();
         }
 
-        
+        public async Task<TblAdmin?> GetAdminByIdAsync(int id)
+        {
+            return await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId== id);
+        }
     }
 }
