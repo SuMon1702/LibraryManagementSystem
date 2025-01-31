@@ -1,10 +1,11 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Repositories;
 
 namespace LibraryManagementSystem.Services
 {
-    public class AdminService: IAdminService
+    public class AdminService : IAdminService
     {
         private readonly IAdminRepository _adminRepository;
 
@@ -17,7 +18,7 @@ namespace LibraryManagementSystem.Services
         {
             var admins = await _adminRepository.GetAdminsAsync();
             return Result<List<TblAdmin>>.Success(admins);
-        } 
+        }
 
         public async Task<Result<TblAdmin>> GetAdminByIdAsync(int id)
         {
@@ -28,6 +29,27 @@ namespace LibraryManagementSystem.Services
             }
             return Result<TblAdmin>.Success(admin);
         }
-    }
 
+        public async Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel)
+        {
+            if (loginModel == null)
+            {
+                return Result<TblAdmin>.Fail("Invalid Login");
+            }
+
+            if (string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Password))
+            {
+                return Result<TblAdmin>.Fail("Email and password fields cannot be empty.");
+            }
+
+            var admin = await _adminRepository.AdminLogin(loginModel.Email, loginModel.Password);
+
+            if (admin == null)
+            {
+                return Result<TblAdmin>.Fail("Invalid email or password.");
+            }
+            return Result<TblAdmin>.Success(admin);
+        }
+
+    }
 }
