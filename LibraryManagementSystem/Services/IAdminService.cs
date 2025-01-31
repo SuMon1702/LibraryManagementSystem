@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Services
@@ -7,5 +8,6 @@ namespace LibraryManagementSystem.Services
     {
         Task<Result<List<TblAdmin>>> GetAdminsAsync();
         Task<Result<TblAdmin>> GetAdminByIdAsync(int id);
+        Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel);
     }
 }
