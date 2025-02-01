@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace LibraryManagementSystem.Models;
 
-public partial class TblBook
+public  class TblBook
 {
-    public int BookId { get; set; }
+    public int BookId { get; set; } 
 
     public string BookTitle { get; set; } = null!;
 
