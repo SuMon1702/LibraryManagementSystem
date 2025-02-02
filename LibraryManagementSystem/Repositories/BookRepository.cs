@@ -1,9 +1,11 @@
-﻿using LibraryManagementSystem.Models;
+﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+using LibraryManagementSystem.Model;
+using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Repositories
 {
-    public class BookRepository:IBookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly AppDbContext _context;
 
@@ -17,9 +19,6 @@ namespace LibraryManagementSystem.Repositories
             return await _context.TblBooks.Where(x => !x.IsActive).ToListAsync(cs);
         }
 
-        public async Task<TblBook> GetBookAsync(int id)
-        {
-            return await _context.TblBooks.FindAsync(id);
-        }
+        
     }
 }
