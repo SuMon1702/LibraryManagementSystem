@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Repositories
@@ -26,6 +27,12 @@ namespace LibraryManagementSystem.Repositories
         public async Task<TblAdmin?> AdminLogin (string email, string password)
         {
             return await _context.TblAdmins.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+        }
+
+        public async Task<TblAdmin?> UpdateAdmin(int id)
+        {
+            var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId == id);
+            return admin;
         }
 
         
