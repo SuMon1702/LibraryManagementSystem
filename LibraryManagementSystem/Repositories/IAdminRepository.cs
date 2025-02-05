@@ -7,6 +7,7 @@ namespace LibraryManagementSystem.Repositories
         Task<List<TblAdmin>> GetAdminsAsync();
         Task<TblAdmin?> GetAdminByIdAsync(int id);
         Task<TblAdmin?> AdminLogin(string email, string password);
+        Task<TblAdmin?> UpdateAdmin(int id);
 
 
 
