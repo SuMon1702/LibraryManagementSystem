@@ -9,5 +9,6 @@ namespace LibraryManagementSystem.Services
         Task<Result<List<TblAdmin>>> GetAdminsAsync();
         Task<Result<TblAdmin>> GetAdminByIdAsync(int id);
         Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel);
+        Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model);
     }
 }
