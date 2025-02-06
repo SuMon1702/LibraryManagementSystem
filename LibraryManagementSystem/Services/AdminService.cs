@@ -51,5 +51,19 @@ namespace LibraryManagementSystem.Services
             return Result<TblAdmin>.Success(admin);
         }
 
+        public async Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model)
+        {
+            var item = await _adminRepository.GetAdminByIdAsync(id);
+            if (item == null)
+            {
+                return Result<TblAdmin>.Fail("Admin not found.");
+            }
+
+            item.Address = model.Address;
+            item.AdminName = model.AdminName;
+
+           return Result<TblAdmin>.Success(item);
+        }
+
     }
 }
