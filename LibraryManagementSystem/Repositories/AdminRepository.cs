@@ -29,9 +29,18 @@ namespace LibraryManagementSystem.Repositories
             return await _context.TblAdmins.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
         }
 
-        public async Task<TblAdmin?> UpdateAdmin(int id)
+        public async Task<TblAdmin?> UpdateAdmin(int id, AdminModel model)
         {
             var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId == id);
+            if (admin == null)
+            {
+                return null;
+            }
+            admin.Address = model.Address;
+            admin.AdminName = model.AdminName;
+
+            _context.Entry(admin).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return admin;
         }
 
