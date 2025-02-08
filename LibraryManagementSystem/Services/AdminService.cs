@@ -53,7 +53,7 @@ public class AdminService : IAdminService
 
     public async Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model)
     {
-        var item = await _adminRepository.GetAdminByIdAsync(id);
+        var item = await _adminRepository.UpdateAdmin(id,model);
         if (item == null)
         {
             return Result<TblAdmin>.Fail("Admin not found.");
