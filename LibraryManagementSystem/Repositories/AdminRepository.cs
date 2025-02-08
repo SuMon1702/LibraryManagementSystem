@@ -1,6 +1,7 @@
 ﻿using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Repositories
@@ -36,12 +37,28 @@ namespace LibraryManagementSystem.Repositories
             {
                 return null;
             }
-            admin.Address = model.Address;
-            admin.AdminName = model.AdminName;
+
+            //Only update fields that are provided (not null or empty)
+            if (!string.IsNullOrWhiteSpace(model.AdminName))
+            {
+                admin.AdminName = model.AdminName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Address))
+            {
+                admin.Address = model.Address;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Password))
+            {
+                admin.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+            }
 
             _context.Entry(admin).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+
             return admin;
+
         }
 
         
