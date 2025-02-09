@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.Model;
+﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.CodeAnalysis.Scripting;
@@ -27,15 +28,27 @@ namespace LibraryManagementSystem.Repositories
 
         public async Task<TblAdmin?> AdminLogin (string email, string password)
         {
-            return await _context.TblAdmins.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+            // Fetch the admin by email
+            var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.Email == email);
+
+
+            // Verify the hashed password
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, admin.Password);
+
+            if (!isPasswordValid)
+            {
+                return null; // Invalid password
+            }
+
+            return admin; // Return the admin if login is successful
         }
 
-        public async Task<TblAdmin?> UpdateAdmin(int id, AdminModel model)
+        public async Task<Result<TblAdmin?>> UpdateAdmin(int id, AdminModel model)
         {
             var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId == id);
-            if (admin == null)
+            if (admin is null)
             {
-                return null;
+                return Result<TblAdmin?>.Fail("No data found");
             }
 
             //Only update fields that are provided (not null or empty)
@@ -57,7 +70,7 @@ namespace LibraryManagementSystem.Repositories
             _context.Entry(admin).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return admin;
+            return Result<TblAdmin?>.Success(admin);
 
         }
 
