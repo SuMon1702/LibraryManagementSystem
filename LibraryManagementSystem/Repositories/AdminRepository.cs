@@ -26,22 +26,26 @@ namespace LibraryManagementSystem.Repositories
             return await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId== id);
         }
 
-        public async Task<TblAdmin?> AdminLogin (string email, string password)
+        public async Task<Result<TblAdmin?>> AdminLogin (string email, string password)
         {
             // Fetch the admin by email
             var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.Email == email);
-
+            if (admin == null)
+            {
+                return Result<TblAdmin?>.Fail("Invalid email");
+            }
 
             // Verify the hashed password
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, admin.Password);
 
             if (!isPasswordValid)
             {
-                return null; // Invalid password
+                return Result<TblAdmin?>.Fail("Invalid password"); // Invalid password
             }
 
-            return admin; // Return the admin if login is successful
+            return Result<TblAdmin?>.Success("Admin login succeed"); // Return the admin if login is successful
         }
+
 
         public async Task<Result<TblAdmin?>> UpdateAdmin(int id, AdminModel model)
         {
