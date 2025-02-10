@@ -45,7 +45,7 @@ namespace LibraryManagementSystem.Repositories
                 return Result<TblAdmin?>.Fail("Invalid password"); // Invalid password
             }
 
-            return Result<TblAdmin?>.Success("Admin login succeed"); // Return the admin if login is successful
+            return Result<TblAdmin?>.Success(admin,"Admin login succeed");
         }
 
 
