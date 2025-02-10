@@ -21,9 +21,10 @@ namespace LibraryManagementSystem.Repositories
             return await _context.TblAdmins.ToListAsync();
         }
 
-        public async Task<TblAdmin?> GetAdminByIdAsync(int id)
+        public async Task<Result<TblAdmin?>> GetAdminByIdAsync(int id)
         {
-            return await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId== id);
+            var result=await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId== id);
+            return Result<TblAdmin?>.Success(result);
         }
 
         public async Task<Result<TblAdmin?>> AdminLogin (string email, string password)
