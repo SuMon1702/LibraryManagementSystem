@@ -16,9 +16,10 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<List<TblAdmin>> GetAdminsAsync()
+        public async Task<Result<List<TblAdmin>>> GetAdminsAsync()
         {
-            return await _context.TblAdmins.ToListAsync();
+            var item= await _context.TblAdmins.ToListAsync();
+            return Result<List<TblAdmin>>.Success(item);
         }
 
         public async Task<Result<TblAdmin?>> GetAdminByIdAsync(int id)
