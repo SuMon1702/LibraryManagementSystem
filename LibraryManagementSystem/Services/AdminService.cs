@@ -17,7 +17,7 @@ public class AdminService : IAdminService
     public async Task<Result<List<TblAdmin>>> GetAdminsAsync()
     {
         var admins = await _adminRepository.GetAdminsAsync();
-        return Result<List<TblAdmin>>.Success(admins);
+        return Result<List<TblAdmin>>.Success("Succeed");
     }
 
     public async Task<Result<TblAdmin>> GetAdminByIdAsync(int id)
@@ -27,7 +27,7 @@ public class AdminService : IAdminService
         {
             return Result<TblAdmin>.Fail("Admin not found.");
         }
-        return Result<TblAdmin>.Success(admin);
+        return Result<TblAdmin>.Success("Succeed");
     }
 
     public async Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel)
@@ -48,7 +48,7 @@ public class AdminService : IAdminService
         {
             return Result<TblAdmin>.Fail("Invalid email or password.");
         }
-        return Result<TblAdmin>.Success(admin);
+        return Result<TblAdmin>.Success("Login succeed");
     }
 
     public async Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model)
@@ -58,7 +58,7 @@ public class AdminService : IAdminService
         {
             return Result<TblAdmin>.Fail("Admin not found.");
         }
-       return Result<TblAdmin>.Success(item);
+       return Result<TblAdmin>.Success("Admin updated");
     }
 
 }
