@@ -40,11 +40,22 @@ namespace LibraryManagementSystem.Repositories
 
         public async Task<Result<TblAdmin?>> AdminLogin (string email, string password)
         {
-            // Fetch the admin by email
+           
             var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.Email == email);
-            if (admin == null)
+
+            if (admin is null)
             {
-                return Result<TblAdmin?>.Fail("Invalid email");
+                return Result<TblAdmin?>.Fail("Invalid data");
+            }
+
+            //This step is to check if the stored password is hashed
+            if (!admin.Password.StartsWith("$2a$") && !admin.Password.StartsWith("$2b$"))
+            {
+               
+              admin.Password = BCrypt.Net.BCrypt.HashPassword(admin.Password);  // If NOT hashed, hash it and update the database
+
+                _context.Entry(admin).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
             }
 
             // Verify the hashed password
@@ -52,7 +63,7 @@ namespace LibraryManagementSystem.Repositories
 
             if (!isPasswordValid)
             {
-                return Result<TblAdmin?>.Fail("Invalid password"); // Invalid password
+                return Result<TblAdmin?>.Fail("Invalid entry"); 
             }
 
             return Result<TblAdmin?>.Success(admin,"Admin login succeed");
