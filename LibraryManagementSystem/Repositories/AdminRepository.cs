@@ -16,15 +16,21 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<Result<List<TblAdmin>>> GetAdminsAsync()
+        public async Task<Result<List<TblAdmin?>>> GetAdminsAsync()
         {
-            var item= await _context.TblAdmins.ToListAsync();
-            return Result<List<TblAdmin>>.Success(item);
+            var item = await _context.TblAdmins.ToListAsync();
+
+            if (item is null || item.Count == 0)
+            {
+                return Result<List<TblAdmin?>>.Fail("No data found.");
+            }
+            return Result<List<TblAdmin?>>.Success(item,"Success");
         }
 
         public async Task<Result<TblAdmin?>> GetAdminByIdAsync(int id)
         {
             var result=await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId== id);
+          
             return Result<TblAdmin?>.Success(result);
         }
 
