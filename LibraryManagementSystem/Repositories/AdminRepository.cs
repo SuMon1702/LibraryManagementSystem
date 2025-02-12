@@ -30,7 +30,11 @@ namespace LibraryManagementSystem.Repositories
         public async Task<Result<TblAdmin?>> GetAdminByIdAsync(int id)
         {
             var result=await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId== id);
-          
+
+            if (result is null)
+            {
+                return Result<TblAdmin?>.Fail("No data found");
+            }
             return Result<TblAdmin?>.Success(result);
         }
 
