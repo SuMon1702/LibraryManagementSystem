@@ -2,10 +2,13 @@
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
+using System.Web.Http;
+using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 namespace LibraryManagementSystem.Controllers;
 
 [Route("api/[controller]")]
