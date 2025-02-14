@@ -2,6 +2,6 @@
 {
     public class AdminResetModel
     {
-        public string Password { get; set; } = null!;
+        public string? Password { get; set; } 
     }
 }
