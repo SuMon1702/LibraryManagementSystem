@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+﻿using LibraryManagementSystem.Dtos;
+using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -70,6 +71,7 @@ namespace LibraryManagementSystem.Repositories
         }
 
 
+
         public async Task<Result<TblAdmin?>> UpdateAdmin(int id, AdminModel model)
         {
             var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId == id);
@@ -101,6 +103,24 @@ namespace LibraryManagementSystem.Repositories
 
         }
 
-        
+        public async Task<Result<TblAdmin>> ResetPassword(int adminId, string password)
+        {
+            var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId == adminId);
+            if (admin == null)
+            {
+                return Result<TblAdmin>.Fail("Admin not found.");
+            }
+
+            // ✅ Hash the new password before saving
+            admin.Password = BCrypt.Net.BCrypt.HashPassword(password);
+
+            _context.Entry(admin).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Result<TblAdmin>.Success(admin, "Password reset successful.");
+        }
+
+
+
     }
 }
