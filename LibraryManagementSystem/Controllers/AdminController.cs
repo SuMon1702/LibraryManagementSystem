@@ -71,14 +71,14 @@ public class AdminController : ControllerBase
 
     #region ResetPassword
     [HttpPut("resetPassword/{adminId}")]
-    public async Task<ActionResult<Result<TblAdmin>>> ResetPassword(int adminId, [FromBody] AdminResetModel reset)
+    public async Task<ActionResult<TblAdmin>> ResetPassword(int adminId, [FromBody] AdminResetModel reset)
     {
         if (reset is null || string.IsNullOrWhiteSpace(reset.Password))
         {
             return BadRequest("Invalid request. Password cannot be empty.");
         }
         var item = await _service.ResetPassword(adminId, reset.Password);
-        return item;
+        return Ok(item);
     }
     #endregion
 }
