@@ -103,7 +103,7 @@ namespace LibraryManagementSystem.Repositories
 
         }
 
-        public async Task<Result<TblAdmin>> ResetPassword(int adminId, string password)
+        public async Task<Result<TblAdmin>> ResetPassword(int adminId, AdminResetModel reset)
         {
             var admin = await _context.TblAdmins.FirstOrDefaultAsync(x => x.AdminId == adminId);
             if (admin == null)
@@ -112,7 +112,7 @@ namespace LibraryManagementSystem.Repositories
             }
 
             // ✅ Hash the new password before saving
-            admin.Password = BCrypt.Net.BCrypt.HashPassword(password);
+            admin.Password = BCrypt.Net.BCrypt.HashPassword(reset.Password);
 
             _context.Entry(admin).State = EntityState.Modified;
             await _context.SaveChangesAsync();
