@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+﻿using LibraryManagementSystem.Dtos;
+using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Services;
@@ -26,11 +27,11 @@ public class AdminController : ControllerBase
 
     #region GetAdminsAsync
     [HttpGet]
-    public async Task<ActionResult<Result<List<TblAdmin>>>> GetAdminsAsync()
+    public async Task<ActionResult<List<TblAdmin>>> GetAdminsAsync()
     {
 
         var result = await _service.GetAdminsAsync();
-        return result;
+        return Ok(result);
     }
     #endregion
 
@@ -63,10 +64,21 @@ public class AdminController : ControllerBase
         {
             return BadRequest("Invalid request");
         }
-       var item = await _service.UpdateAdmin(id, model);
-       return item;
+        var item = await _service.UpdateAdmin(id, model);
+        return item;
     }
     #endregion
 
+    #region ResetPassword
+    [HttpPut("resetPassword/{adminId}")]
+    public async Task<ActionResult<Result<TblAdmin>>> ResetPassword(int adminId, [FromBody] AdminResetModel reset)
+    {
+        if (reset is null || string.IsNullOrWhiteSpace(reset.Password))
+        {
+            return BadRequest("Invalid request. Password cannot be empty.");
+        }
+        var item = await _service.ResetPassword(adminId, reset.Password);
+        return item;
+    }
+    #endregion
 }
-
