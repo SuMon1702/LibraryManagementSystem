@@ -48,10 +48,10 @@ public class AdminController : ControllerBase
 
     #region AdminLogin
     [HttpPost("admin_Login")]
-    public async Task<ActionResult<Result<TblAdmin>>> AdminLogin([FromBody] AdminLoginModel login)
+    public async Task<ActionResult<TblAdmin>> AdminLogin([FromBody] AdminLoginModel login)
     {
         var result = await _service.AdminLogin(login);
-        return result;
+        return Ok(result);
     }
     #endregion
 
