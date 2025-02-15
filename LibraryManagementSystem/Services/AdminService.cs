@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+﻿using LibraryManagementSystem.Dtos;
+using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Repositories;
@@ -60,5 +61,16 @@ public class AdminService : IAdminService
         }
        return Result<TblAdmin>.Success("Admin updated");
     }
+
+    public async Task<Result<TblAdmin>> ResetPassword(int adminId, AdminResetModel reset)
+    {
+        if (string.IsNullOrWhiteSpace(reset.Password))
+        {
+            return Result<TblAdmin>.Fail("Password cannot be empty.");
+        }
+
+        return await _adminRepository.ResetPassword(adminId, reset.Password);
+    }
+
 
 }
