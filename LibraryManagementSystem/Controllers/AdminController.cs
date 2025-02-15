@@ -38,10 +38,10 @@ public class AdminController : ControllerBase
 
     #region GetAdminAsync
     [HttpGet("{id}")]
-    public async Task<ActionResult<Result<TblAdmin>>> GetAdminAsync(int id)
+    public async Task<ActionResult<TblAdmin>> GetAdminAsync(int id)
     {
         var result = await _service.GetAdminByIdAsync(id);
-        return result;
+        return Ok(result);
     }
     #endregion
 
