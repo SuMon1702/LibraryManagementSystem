@@ -10,5 +10,6 @@ namespace LibraryManagementSystem.Services
         Task<Result<TblAdmin>> GetAdminByIdAsync(int id);
         Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel);
         Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model);
+        Task<Result<TblAdmin>> ResetPassword(int adminId, string newPassword);
     }
 }
