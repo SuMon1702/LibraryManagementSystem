@@ -58,14 +58,14 @@ public class AdminController : ControllerBase
 
     #region 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Result<TblAdmin>>> UpdateAdmin(int id, AdminModel model)
+    public async Task<ActionResult<TblAdmin>> UpdateAdmin(int id, AdminModel model)
     {
         if (model is null)
         {
             return BadRequest("Invalid request");
         }
         var item = await _service.UpdateAdmin(id, model);
-        return item;
+        return Ok(item);
     }
     #endregion
 
