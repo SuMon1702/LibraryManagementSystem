@@ -76,7 +76,7 @@ public class AdminService : IAdminService
             return Result<TblAdmin>.Fail(result.Message!);  // Forward failure message from repository
         }
 
-        return await _adminRepository.ResetPassword(adminId, newPassword);
+        return Result<TblAdmin>.Success("Password reset successful.");
     }
 
 
