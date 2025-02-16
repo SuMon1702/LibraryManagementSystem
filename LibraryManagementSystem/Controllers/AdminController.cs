@@ -1,14 +1,11 @@
 ﻿using LibraryManagementSystem.Dtos;
+using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Http;
-using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
-using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
-using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
-using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
-using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+
+
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -77,9 +74,17 @@ namespace LibraryManagementSystem.Controllers
             {
                 return BadRequest("Invalid request. Password cannot be empty.");
             }
+
             var item = await _service.ResetPassword(adminId, reset.Password);
+
+            if (!item.IsSuccess)
+            {
+                return BadRequest(item.Message); 
+            }
+
             return Ok(item);
         }
         #endregion
+
     }
 }
