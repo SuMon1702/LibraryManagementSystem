@@ -18,7 +18,7 @@ public class AdminService : IAdminService
     public async Task<Result<List<TblAdmin>>> GetAdminsAsync()
     {
         var admins = await _adminRepository.GetAdminsAsync();
-        return Result<List<TblAdmin>>.Success("Succeed");
+        return Result<List<TblAdmin>>.Success(admins.Data!,"Succeed");
     }
 
     public async Task<Result<TblAdmin>> GetAdminByIdAsync(int id)
@@ -45,11 +45,12 @@ public class AdminService : IAdminService
 
         var admin = await _adminRepository.AdminLogin(loginModel.Email, loginModel.Password);
 
-        if (admin == null)
+        if (!admin.IsSuccess || admin.Data == null)
         {
             return Result<TblAdmin>.Fail("Invalid email or password.");
         }
-        return Result<TblAdmin>.Success("Login succeed");
+
+        return Result<TblAdmin>.Success(admin.Data, "Login successful");
     }
 
     public async Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model)
@@ -62,14 +63,20 @@ public class AdminService : IAdminService
        return Result<TblAdmin>.Success("Admin updated");
     }
 
-    public async Task<Result<TblAdmin>> ResetPassword(int adminId, AdminResetModel reset)
+    public async Task<Result<TblAdmin>> ResetPassword(int adminId, string newPassword)
     {
-        if (string.IsNullOrWhiteSpace(reset.Password))
+        if (string.IsNullOrWhiteSpace(newPassword))
         {
             return Result<TblAdmin>.Fail("Password cannot be empty.");
         }
+        var result = await _adminRepository.ResetPassword(adminId, newPassword);
 
-        return await _adminRepository.ResetPassword(adminId, reset.Password);
+        if (!result.IsSuccess)
+        {
+            return Result<TblAdmin>.Fail(result.Message!);  // Forward failure message from repository
+        }
+
+        return await _adminRepository.ResetPassword(adminId, newPassword);
     }
 
 
