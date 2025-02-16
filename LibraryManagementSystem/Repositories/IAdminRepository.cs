@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
+﻿using LibraryManagementSystem.Dtos;
+using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 
@@ -10,6 +11,6 @@ namespace LibraryManagementSystem.Repositories
         Task<Result<TblAdmin?>> GetAdminByIdAsync(int id);
         Task<Result<TblAdmin?>> AdminLogin(string email, string password);
         Task<Result<TblAdmin?>> UpdateAdmin(int id, AdminModel model);
-        Task<Result<TblAdmin>> ResetPassword(int adminId, string newPassword);
+        Task<Result<TblAdmin>> ResetPassword(int adminId,string newPassword);
     }
 }
