@@ -3,6 +3,7 @@ using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Repositories;
+using MySqlX.XDevAPI.Common;
 
 namespace LibraryManagementSystem.Services;
 
@@ -31,6 +32,28 @@ public class AdminService : IAdminService
         return Result<TblAdmin>.Success("Succeed");
     }
 
+    //public async Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel)
+    //{
+    //    if (loginModel == null)
+    //    {
+    //        return Result<TblAdmin>.Fail("Invalid Login");
+    //    }
+
+    //    if (string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Password))
+    //    {
+    //        return Result<TblAdmin>.Fail("Email and password fields cannot be empty.");
+    //    }
+
+    //    var admin = await _adminRepository.AdminLogin(loginModel.Email, loginModel.Password);
+
+    //    if (!admin.IsSuccess || admin.Data == null)
+    //    {
+    //        return Result<TblAdmin>.Fail("Invalid email or password.");
+    //    }
+
+    //    return Result<TblAdmin>.Success(admin.Data, "Login successful");
+    //}
+
     public async Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel)
     {
         if (loginModel == null)
@@ -45,13 +68,14 @@ public class AdminService : IAdminService
 
         var admin = await _adminRepository.AdminLogin(loginModel.Email, loginModel.Password);
 
-        if (!admin.IsSuccess || admin.Data == null)
+        if (!admin.IsSuccess)
         {
             return Result<TblAdmin>.Fail("Invalid email or password.");
         }
 
-        return Result<TblAdmin>.Success(admin.Data, "Login successful");
+        return Result<TblAdmin>.Success("Login successful");
     }
+
 
     public async Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model)
     {
