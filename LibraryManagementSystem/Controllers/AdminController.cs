@@ -11,15 +11,10 @@ namespace LibraryManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase
+    public class AdminController(IAdminService service) : ControllerBase
     {
 
-        private readonly IAdminService _service;
-
-        public AdminController(IAdminService service)
-        {
-            _service = service;
-        }
+        private readonly IAdminService _service = service;
 
 
         #region GetAdminsAsync
