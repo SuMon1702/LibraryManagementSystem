@@ -54,33 +54,32 @@ namespace LibraryManagementSystem.Controllers
         }
         #endregion
 
-        //#region GetBookAsync
-        //// GET: api/Book/
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
-        //{
-        //    try
-        //    {
-        //        Result<TblBook> result;
+        #region GetBookAsync
+        // GET: api/Book/
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
+        {
+            try
+            {
+                var book = await service.FindAsync(id);
+                return Ok(book);
 
-        //        var book = await _context.TblBooks.FindAsync(id);
+                ////Since book is a single object (not a collection),don't need to use .Any().
+                //if (book is null)
+                //{
+                //    return Result<TblBook>.Fail("No book is found.");
+                //}
 
-        //        //Since book is a single object (not a collection),don't need to use .Any().
-        //        if (book is null)
-        //        {
-        //            return Result<TblBook>.Fail("No book is found.");
-        //        }
+                //result = Result<TblBook>.Success(book);
+                //return result;
 
-        //        result = Result<TblBook>.Success(book);
-        //        return result;
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Result<TblBook>.Fail(ex);
-        //    }
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+                return Result<TblBook>.Fail(ex);
+            }
+        }
+        #endregion
 
         //#region CreateBook
         //[HttpPost]
@@ -135,7 +134,7 @@ namespace LibraryManagementSystem.Controllers
 
         //        item.Quantity = model.Quantity;
         //        item.BookAmount = model.BookAmount;
-           
+
 
         //        _context.Entry(item).State = EntityState.Modified;
         //        await _context.SaveChangesAsync();
