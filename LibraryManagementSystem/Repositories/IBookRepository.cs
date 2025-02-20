@@ -6,5 +6,6 @@ namespace LibraryManagementSystem.Repositories
     public interface IBookRepository
     {
        Task<List<TblBook>> GetAllBooksAsync(CancellationToken cs);
+        Task<TblBook?> GetBookAsync(int id, CancellationToken cs);
     }
 }
