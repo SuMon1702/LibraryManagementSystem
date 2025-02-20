@@ -19,6 +19,11 @@ namespace LibraryManagementSystem.Repositories
             return await _context.TblBooks.Where(x => !x.IsActive).ToListAsync(cs);
         }
 
-        
+        public async Task<TblBook?> GetBookAsync(int id, CancellationToken cs)
+        {
+            return await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id && !x.IsActive, cs);
+        }
+
+
     }
 }
