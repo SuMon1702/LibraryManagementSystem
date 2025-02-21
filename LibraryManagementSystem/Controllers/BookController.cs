@@ -4,6 +4,7 @@ using LibraryManagementSystem.Models;
 using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
 using LibraryManagementSystem.Services;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -81,37 +82,40 @@ namespace LibraryManagementSystem.Controllers
         }
         #endregion
 
-        //#region CreateBook
-        //[HttpPost]
-        //public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
-        //{
-        //    try
-        //    {
+        #region CreateBook
+        [HttpPost]
+        public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
+        {
+            try
+            {
+                var result = await service.CreateBook(requestModel);
+                return Ok(result);
+            }
 
-        //        //If we use the scaffold model then we do not need to create this instance.
-        //        //But if we use the one model that we built then we need this instance
-        //        var model = new TblBook()
-        //        {
-        //            BookTitle = requestModel.BookTitle,
-        //            Author = requestModel.Author,
-        //            Quantity = requestModel.Quantity,
-        //            BookAmount = requestModel.BookAmount,
-        //            Publisher = requestModel.Publisher
+            //        //If we use the scaffold model then we do not need to create this instance.
+            //        //But if we use the one model that we built then we need this instance
+            //        var model = new TblBook()
+            //        {
+            //            BookTitle = requestModel.BookTitle,
+            //            Author = requestModel.Author,
+            //            Quantity = requestModel.Quantity,
+            //            BookAmount = requestModel.BookAmount,
+            //            Publisher = requestModel.Publisher
 
-        //        };
+            //        };
 
-        //        await _context.TblBooks.AddAsync(model, cs);
-        //        var result = await _context.SaveChangesAsync(cs);
+            //        await _context.TblBooks.AddAsync(model, cs);
+            //        var result = await _context.SaveChangesAsync(cs);
 
-        //        string message = result > 0 ? "Saving Successful" : "Saving Fail";
-        //        return Ok(message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex);
-        //    }
-        //}
-        //#endregion
+            //        string message = result > 0 ? "Saving Successful" : "Saving Fail";
+            //        return Ok(message);
+            //    }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        #endregion
 
 
         //#region UpdateBook
