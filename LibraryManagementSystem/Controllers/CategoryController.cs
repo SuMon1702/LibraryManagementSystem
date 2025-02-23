@@ -24,6 +24,15 @@ namespace LibraryManagementSystem.Controllers
         }
         #endregion
 
+        #region GetCategoryAsync
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblAdmin>> GetCategoryByIdAsync(int id)
+        {
+            var result = await service.GetCategoryById(id);
+            return Ok(result);
+        }
+        #endregion
+
 
         //#region GetCategoryAsync
         //[HttpGet("{id}")]
@@ -61,7 +70,7 @@ namespace LibraryManagementSystem.Controllers
         //        await _context.SaveChangesAsync(cs);
 
         //        return Result<TblCategory>.Success(category);
-        
+
         //    }
         //    catch (Exception ex)
         //    {
