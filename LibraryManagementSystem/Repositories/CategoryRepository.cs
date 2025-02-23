@@ -18,5 +18,11 @@ namespace LibraryManagementSystem.Repositories
             var category = await _context.TblCategories.ToListAsync();
             return Result<List<TblCategory?>>.Success(category!);
         }
+
+        public async Task<Result<TblCategory?>> GetCategoryById(int id)
+        {
+            var category = await _context.TblCategories.FirstOrDefaultAsync(x => x.CategoryId == id);
+            return Result<TblCategory?>.Success(category);
+        }
     }
 }
