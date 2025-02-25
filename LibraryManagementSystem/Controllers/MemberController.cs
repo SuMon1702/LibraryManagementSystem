@@ -1,8 +1,4 @@
-﻿using LibraryManagementSystem.Models;
-using LibraryManagementSystem.Services;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LibraryManagementSystem.Controllers;
+﻿namespace LibraryManagementSystem.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
