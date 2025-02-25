@@ -18,5 +18,15 @@ namespace LibraryManagementSystem.Repositories
             var members = await _context.TblMembers.ToListAsync();
             return Result<List<TblMember?>>.Success(members!);
         }
+
+        public async Task<Result<TblMember?>> GetMemberByIDAsync(int id)
+        {
+            var members = await _context.TblMembers.FirstOrDefaultAsync(x => x.MemberId == id);
+            if (members is null)
+            {
+                return Result<TblMember?>.Fail("No data found");
+            }
+            return Result<TblMember?>.Success(members);
+        }
     }
 }
