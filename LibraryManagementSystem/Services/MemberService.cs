@@ -15,5 +15,10 @@ namespace LibraryManagementSystem.Services
         {
             return await _memberRepository.GetMembersAsync();
         }
+
+        public async Task<Result<TblMember?>> GetMemberByIdAsync(int id)
+        {
+            return await _memberRepository.GetMemberByIdAsync(id);
+        }
     }
 }
