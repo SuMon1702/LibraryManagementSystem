@@ -29,6 +29,20 @@ namespace LibraryManagementSystem.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblMember>> GetMemberByIdAsync(int id)
+        {
+            var result = await service.GetMemberByIdAsync(id);
+            return Ok(result);
+        }
+
+
+
+
+
+
+
+
         //[HttpGet("{id}")]
         //public async Task<ActionResult<Result<TblMember>>> GetMemberAsync(int id)
         //{
@@ -61,7 +75,7 @@ namespace LibraryManagementSystem.Controllers
 
         //    if (!Enum.IsDefined(typeof(MemberShipType), regModel.MembershipType))
         //        return BadRequest("Invalid MembershipType. Allowed values are 'Premium' and 'Standard'.");
-            
+
 
 
         //    var model = new TblMember()
