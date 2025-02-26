@@ -24,6 +24,8 @@ namespace LibraryManagementSystem.Repositories
             return await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id && !x.IsActive, cs);
         }
 
+       
+
 
     }
 }
