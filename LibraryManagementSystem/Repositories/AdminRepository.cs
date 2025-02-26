@@ -22,7 +22,7 @@ public class AdminRepository : IAdminRepository
         {
             return Result<List<TblAdmin?>>.Fail("No data found.");
         }
-        return Result<List<TblAdmin?>>.Success(item,"Success");
+        return Result<List<TblAdmin?>>.Success(item!,"Success");
     }
 
     public async Task<Result<TblAdmin?>> GetAdminByIdAsync(int id)
