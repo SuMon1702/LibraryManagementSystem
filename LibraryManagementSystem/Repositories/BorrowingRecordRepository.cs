@@ -17,5 +17,15 @@ namespace LibraryManagementSystem.Repositories
             var borrowingRecords = await _context.TblBorrowingRecords.ToListAsync();
             return Result<List<TblBorrowingRecord>>.Success(borrowingRecords!);
         }
+
+        public async Task<Result<TblBorrowingRecord?>> GetBorrowingRecordByIDAsync(int id)
+        {
+            var borrowingRecord = await _context.TblBorrowingRecords.FirstOrDefaultAsync(x => x.BorrowingRecordId == id);
+            if (borrowingRecord is null)
+            {
+                return Result<TblBorrowingRecord?>.Fail("No data found");
+            }
+            return Result<TblBorrowingRecord?>.Success(borrowingRecord);
+        }
     }
 }
