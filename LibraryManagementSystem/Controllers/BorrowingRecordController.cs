@@ -17,6 +17,13 @@ public class BorrowingRecordController : ControllerBase
         this.service = service;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<List<TblBorrowingRecord>>> GetBorrowingRecords()
+    {
+        var result = await service.GetBorrowingRecordsAsync();
+        return Ok(result);
+    }
+
 
 
     //    [HttpPost("BorrowBook")]
