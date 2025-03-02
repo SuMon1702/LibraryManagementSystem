@@ -12,13 +12,13 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync()
+        public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsIdAsync()
         {
             var borrowingRecords = await _context.TblBorrowingRecords.ToListAsync();
             return Result<List<TblBorrowingRecord>>.Success(borrowingRecords!);
         }
 
-        public async Task<Result<TblBorrowingRecord?>> GetBorrowingRecordByIDAsync(int id)
+        public async Task<Result<TblBorrowingRecord?>> GetBorrowingRecordByIdAsync(int id)
         {
             var borrowingRecord = await _context.TblBorrowingRecords.FirstOrDefaultAsync(x => x.BorrowingRecordId == id);
             if (borrowingRecord is null)
