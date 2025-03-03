@@ -14,12 +14,12 @@ namespace LibraryManagementSystem.Services
 
         public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync()
         {
-            return await _borrowingRecordRepository.GetBorrowingRecordsIdAsync();
+            return await _borrowingRecordRepository.GetBorrowingRecordsAsync();
         }
 
-        public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsByIdAsync()
+        public async Task<Result<TblBorrowingRecord?>> GetBorrowingRecordsByIdAsync(int id)
         {
-            return await _borrowingRecordRepository.GetBorrowingRecordsIdAsync();
+            return await _borrowingRecordRepository.GetBorrowingRecordByIdAsync(id);
         }
     }
 }
