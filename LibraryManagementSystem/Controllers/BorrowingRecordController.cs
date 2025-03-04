@@ -24,6 +24,15 @@ public class BorrowingRecordController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<TblBorrowingRecord>> GetBorrowingRecordById(int id)
+    {
+        var result = await service.GetBorrowingRecordsByIdAsync(id);
+        return Ok(result);
+    }
+
+
+
 
 
     //    [HttpPost("BorrowBook")]
