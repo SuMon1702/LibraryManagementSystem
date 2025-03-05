@@ -7,4 +7,4 @@ namespace LibraryManagementSystem.Repositories
         Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync();
         Task<Result<TblBorrowingRecord?>> GetBorrowingRecordByIdAsync(int id);
     }
-}
+}   
