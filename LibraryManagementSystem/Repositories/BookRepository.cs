@@ -14,15 +14,15 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<List<TblBook>> GetAllBooksAsync(CancellationToken cs)
+        public async Task<List<TblBook>> GetAllBooksAsync()
         {
-            return await _context.TblBooks.Where(x => !x.IsActive).ToListAsync(cs);
+            return await _context.TblBooks.Where(x => !x.IsActive).ToListAsync();
         }
 
-        public async Task<TblBook?> GetBookAsync(int id, CancellationToken cs)
-        {
-            return await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id && !x.IsActive, cs);
-        }
+        //public async Task<TblBook?> GetBookAsync(int id, CancellationToken cs)
+        //{
+        //    return await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id && !x.IsActive, cs);
+        //}
 
        
 
