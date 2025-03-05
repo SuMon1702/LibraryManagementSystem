@@ -13,6 +13,12 @@ namespace LibraryManagementSystem.Services
             _bookRepository = bookRepository;
         }
 
+        public async Task<Result<List<TblBook>>> GetAllBooksAsync()
+        {
+            var books = await _bookRepository.GetAllBooksAsync();
+            return Result<List<TblBook>>.Success("Succeed");
+        }
+
         //public async Task<Result<List<TblBook>>> GetAllBooksAsync(CancellationToken cs)
         //{
         //    try
@@ -34,7 +40,7 @@ namespace LibraryManagementSystem.Services
         //    {
         //        return Result<List<TblBook>>.Fail(ex);
         //    }
-        
-        }
+
+    }
     }
 
