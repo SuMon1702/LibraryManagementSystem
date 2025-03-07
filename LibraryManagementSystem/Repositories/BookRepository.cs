@@ -14,17 +14,25 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<List<TblBook>> GetAllBooksAsync()
+        public async Task<Result<List<TblBook?>>> GetAllBooksAsync()
         {
-            return await _context.TblBooks.Where(x => !x.IsActive).ToListAsync();
+            var item = await _context.TblBooks.ToListAsync();
+            
+            if (item == null)
+            {
+                return Result<List<TblBook?>>.Fail("No data found.");
+
+            }
+
+            return Result<List<TblBook?>>.Success(item!, "Success");
         }
 
-        //public async Task<TblBook?> GetBookAsync(int id, CancellationToken cs)
-        //{
-        //    return await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id && !x.IsActive, cs);
-        //}
+        public async Task<TblBook?> GetBookAsync(int id)
+        {
+            return await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id && !x.IsActive);
+        }
 
-       
+
 
 
     }
