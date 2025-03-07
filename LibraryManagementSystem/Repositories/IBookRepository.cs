@@ -5,8 +5,7 @@ namespace LibraryManagementSystem.Repositories
 {
     public interface IBookRepository
     {
-       Task<List<TblBook>> GetAllBooksAsync();
-
-       //Task<TblBook?> GetBookAsync(int id, CancellationToken cs);
+       Task<Result<List<TblBook?>>> GetAllBooksAsync();
+       Task<TblBook?> GetBookAsync(int id);
     }
 }
