@@ -27,9 +27,14 @@ namespace LibraryManagementSystem.Repositories
             return Result<List<TblBook?>>.Success(item!, "Success");
         }
 
-        public async Task<TblBook?> GetBookAsync(int id)
+        public async Task<Result<TblBook?>> GetBookAsync(int id)
         {
-            return await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id && !x.IsActive);
+            var item = await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id);
+            if (item == null)
+            {
+                return Result<TblBook?>.Fail("No data found.");
+            }
+            return Result<TblBook?>.Success(item, "Success");
         }
 
 
