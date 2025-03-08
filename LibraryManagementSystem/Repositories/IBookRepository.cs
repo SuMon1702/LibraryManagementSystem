@@ -6,6 +6,6 @@ namespace LibraryManagementSystem.Repositories
     public interface IBookRepository
     {
        Task<Result<List<TblBook?>>> GetAllBooksAsync();
-       Task<TblBook?> GetBookAsync(int id);
+       Task<Result<TblBook?>> GetBookAsync(int id);
     }
 }
