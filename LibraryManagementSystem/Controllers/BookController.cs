@@ -19,16 +19,13 @@ namespace LibraryManagementSystem.Controllers
             this.service = service;
         }
 
-
-
         #region GetBooksAsync
         // GET: api/BookList
         [HttpGet]
-        public async Task<ActionResult<Result<IEnumerable<TblBook>>>> GetBooksAsync(CancellationToken cs)
+        public async Task<ActionResult<List<TblBook>>> GetBooksAsync()
         {
-            try
-            {
-                var result = await service.GetBooksAsync();
+
+            var result = await service.GetAllBooksAsync();
                 return Ok(result);
 
                 //var book = await _context
@@ -46,12 +43,9 @@ namespace LibraryManagementSystem.Controllers
                 //{
                 //    return Result<IEnumerable<TblBook>>.Success(book);
                 //}
-            }
+            
 
-            catch (Exception ex)
-            {
-                return Result<IEnumerable<TblBook>>.Fail(ex);
-            }
+           
         }
         #endregion
 
@@ -60,9 +54,9 @@ namespace LibraryManagementSystem.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
         {
-            try
-            {
-                var book = await service.FindAsync(id);
+           
+            
+                var book = await service.GetBookAsync(id);
                 return Ok(book);
 
                 ////Since book is a single object (not a collection),don't need to use .Any().
@@ -74,23 +68,20 @@ namespace LibraryManagementSystem.Controllers
                 //result = Result<TblBook>.Success(book);
                 //return result;
 
-            }
-            catch (Exception ex)
-            {
-                return Result<TblBook>.Fail(ex);
-            }
+            
+            
         }
         #endregion
 
-        #region CreateBook
-        [HttpPost]
-        public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
-        {
-            try
-            {
-                var result = await service.CreateBook(requestModel);
-                return Ok(result);
-            }
+        //#region CreateBook
+        //[HttpPost]
+        //public async Task<ActionResult<TblBook>> CreateBook([FromBody] BookRequestModel requestModel, CancellationToken cs)
+        //{
+        //    try
+        //    {
+        //        var result = await service.CreateBook(requestModel);
+        //        return Ok(result);
+        //    }
 
             //        //If we use the scaffold model then we do not need to create this instance.
             //        //But if we use the one model that we built then we need this instance
@@ -110,12 +101,12 @@ namespace LibraryManagementSystem.Controllers
             //        string message = result > 0 ? "Saving Successful" : "Saving Fail";
             //        return Ok(message);
             //    }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-        #endregion
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
+        //#endregion
 
 
         //#region UpdateBook
