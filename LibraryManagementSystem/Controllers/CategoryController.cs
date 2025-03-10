@@ -9,9 +9,14 @@ namespace LibraryManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController(ICategoryService service) : ControllerBase
+    public class CategoryController: ControllerBase
     {
-        private readonly ICategoryService service = service;
+        private readonly ICategoryService service;
+
+        public CategoryController(ICategoryService service)
+        {
+            this.service = service;
+        }
 
 
 
@@ -19,7 +24,7 @@ namespace LibraryManagementSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<List<TblCategory>>> GetCategoriesAsync(CancellationToken cs)
         {
-            var category = await service.GetCategoryAsync();
+            var category = await service.GetCategoryAsync(cs);
             return Ok(category);
         }
         #endregion
