@@ -13,9 +13,9 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<Result<List<TblCategory?>>> GetCategoryAsync()
+        public async Task<Result<List<TblCategory?>>> GetCategoryAsync(CancellationToken cs)
         {
-            var category = await _context.TblCategories.ToListAsync();
+            var category = await _context.TblCategories.ToListAsync(cs);
             return Result<List<TblCategory?>>.Success(category!);
         }
 
