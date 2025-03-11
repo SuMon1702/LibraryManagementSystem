@@ -14,9 +14,9 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<Result<List<TblBook?>>> GetAllBooksAsync()
+        public async Task<Result<List<TblBook?>>> GetAllBooksAsync(CancellationToken cs)
         {
-            var item = await _context.TblBooks.ToListAsync();
+            var item = await _context.TblBooks.ToListAsync(cs);
             
             if (item == null)
             {
