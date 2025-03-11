@@ -13,16 +13,16 @@ namespace LibraryManagementSystem.Services
             _bookRepository = bookRepository;
         }
 
-        public async Task<Result<List<TblBook>>> GetAllBooksAsync()
+        public async Task<Result<List<TblBook>>> GetAllBooksAsync(CancellationToken cs)
         {
-            var books = await _bookRepository.GetAllBooksAsync();
+            var books = await _bookRepository.GetAllBooksAsync(cs);
             return Result<List<TblBook>>.Success("Succeed");
         }
 
         public async Task<Result<TblBook?>> GetBookAsync(int id)
         {
             var book = await _bookRepository.GetBookAsync(id);
-            return Result<TblBook?>.Success(book);
+            return Result<TblBook?>.Success("Succeed");
         }
 
         //public async Task<Result<List<TblBook>>> GetAllBooksAsync(CancellationToken cs)
