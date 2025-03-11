@@ -22,10 +22,10 @@ namespace LibraryManagementSystem.Controllers
         #region GetBooksAsync
         // GET: api/BookList
         [HttpGet]
-        public async Task<ActionResult<List<TblBook>>> GetBooksAsync()
+        public async Task<ActionResult<List<TblBook>>> GetBooksAsync(CancellationToken cs)
         {
 
-            var result = await service.GetAllBooksAsync();
+            var result = await service.GetAllBooksAsync(cs);
                 return Ok(result);
 
                 //var book = await _context
