@@ -25,10 +25,10 @@ namespace LibraryManagementSystem.Controllers
 
         #region GetAdminsAsync
         [HttpGet]
-        public async Task<ActionResult<List<TblAdmin>>> GetAdminsAsync()
+        public async Task<ActionResult<List<TblAdmin>>> GetAdminsAsync(CancellationToken cs)
         {
 
-            var result = await _service.GetAdminsAsync();
+            var result = await _service.GetAdminsAsync(cs);
             return Ok(result);
         }
         #endregion
