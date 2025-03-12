@@ -14,9 +14,9 @@ public class AdminRepository : IAdminRepository
         _context = context;
     }
 
-    public async Task<Result<List<TblAdmin?>>> GetAdminsAsync()
+    public async Task<Result<List<TblAdmin?>>> GetAdminsAsync(CancellationToken cs)
     {
-        var item = await _context.TblAdmins.ToListAsync();
+        var item = await _context.TblAdmins.ToListAsync(cs);
 
         if (item is null || item.Count == 0)
         {
