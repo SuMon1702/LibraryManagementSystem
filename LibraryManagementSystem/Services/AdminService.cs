@@ -16,9 +16,9 @@ public class AdminService : IAdminService
         _adminRepository = adminRepository;
     }
 
-    public async Task<Result<List<TblAdmin>>> GetAdminsAsync()
+    public async Task<Result<List<TblAdmin>>> GetAdminsAsync(CancellationToken cs)
     {
-        var admins = await _adminRepository.GetAdminsAsync();
+        var admins = await _adminRepository.GetAdminsAsync(cs);
         return Result<List<TblAdmin>>.Success(admins.Data!,"Succeed");
     }
 
