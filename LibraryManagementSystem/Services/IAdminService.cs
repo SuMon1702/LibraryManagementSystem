@@ -7,7 +7,7 @@ namespace LibraryManagementSystem.Services
 {
     public interface IAdminService
     {
-        Task<Result<List<TblAdmin>>> GetAdminsAsync();
+        Task<Result<List<TblAdmin>>> GetAdminsAsync(CancellationToken cs);
         Task<Result<TblAdmin>> GetAdminByIdAsync(int id);
         Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel);
         Task<Result<TblAdmin>> UpdateAdmin(int id, AdminModel model);
