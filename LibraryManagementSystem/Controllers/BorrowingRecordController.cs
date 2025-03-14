@@ -18,9 +18,9 @@ public class BorrowingRecordController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<TblBorrowingRecord>>> GetBorrowingRecords()
+    public async Task<ActionResult<List<TblBorrowingRecord>>> GetBorrowingRecords(CancellationToken cs)
     {
-        var result = await service.GetBorrowingRecordsAsync();
+        var result = await service.GetBorrowingRecordsAsync(cs);
         return Ok(result);
     }
 
