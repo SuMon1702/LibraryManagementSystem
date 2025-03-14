@@ -4,7 +4,7 @@ namespace LibraryManagementSystem.Repositories
 {
     public interface IBorrowingRecordRepository
     {
-        Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync();
+        Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync(CancellationToken cs);
         Task<Result<TblBorrowingRecord?>> GetBorrowingRecordByIdAsync(int id);
     }
 }   
