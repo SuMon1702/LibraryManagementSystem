@@ -12,9 +12,9 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync()
+        public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync(CancellationToken cs)
         {
-            var borrowingRecords = await _context.TblBorrowingRecords.ToListAsync();
+            var borrowingRecords = await _context.TblBorrowingRecords.ToListAsync(cs);
             return Result<List<TblBorrowingRecord>>.Success(borrowingRecords!);
         }
 
