@@ -12,9 +12,9 @@ namespace LibraryManagementSystem.Services
             _borrowingRecordRepository = borrowingRecordRepository;
         }
 
-        public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync()
+        public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync(CancellationToken cs)
         {
-            return await _borrowingRecordRepository.GetBorrowingRecordsAsync();
+            return await _borrowingRecordRepository.GetBorrowingRecordsAsync(cs);
         }
 
         public async Task<Result<TblBorrowingRecord?>> GetBorrowingRecordsByIdAsync(int id)
