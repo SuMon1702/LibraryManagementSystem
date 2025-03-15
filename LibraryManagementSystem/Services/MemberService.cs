@@ -11,14 +11,14 @@ namespace LibraryManagementSystem.Services
         {
             _memberRepository = memberRepository;
         }
-        public async Task<Result<List<TblMember?>>> GetMembersAsync()
+        public async Task<Result<List<TblMember?>>> GetMembersAsync(CancellationToken cs)
         {
-            return await _memberRepository.GetMembersAsync();
+            return await _memberRepository.GetMembersAsync(cs);
         }
 
         public async Task<Result<TblMember?>> GetMemberByIdAsync(int id)
         {
-            return await _memberRepository.GetMemberByIdAsync(id);
+            return await _memberRepository.GetMemberByIDAsync(id);
         }
     }
 }
