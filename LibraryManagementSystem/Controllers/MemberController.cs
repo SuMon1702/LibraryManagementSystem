@@ -14,7 +14,7 @@ public class MemberController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<TblMember>>> GetMembersAsync(CancellationToken cs)
     {
-        var result = await service.GetMembersAsync();
+        var result = await service.GetMembersAsync(cs);
         return Ok(result);
     }
 
