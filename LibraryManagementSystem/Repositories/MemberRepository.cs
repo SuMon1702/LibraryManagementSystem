@@ -13,9 +13,9 @@ namespace LibraryManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<Result<List<TblMember?>>> GetMembersAsync()
+        public async Task<Result<List<TblMember?>>> GetMembersAsync(CancellationToken cs)
         {
-            var members = await _context.TblMembers.ToListAsync();
+            var members = await _context.TblMembers.ToListAsync(cs);
             return Result<List<TblMember?>>.Success(members!);
         }
 
