@@ -15,6 +15,10 @@ namespace LibraryManagementSystem.Repositories
         public async Task<Result<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync(CancellationToken cs)
         {
             var borrowingRecords = await _context.TblBorrowingRecords.ToListAsync(cs);
+            if (borrowingRecords is null || borrowingRecords.Count == 0)
+            {
+                return Result<List<TblBorrowingRecord>>.Fail("No data found");
+            }
             return Result<List<TblBorrowingRecord>>.Success(borrowingRecords!);
         }
 
