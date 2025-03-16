@@ -1,7 +1,5 @@
-﻿using LibraryManagementSystem.Dtos;
-using LibraryManagementSystem.LibraryManagement.Utlis;
+﻿using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Repositories
 {
