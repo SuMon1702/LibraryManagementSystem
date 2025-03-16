@@ -1,11 +1,4 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Models;
-using LibraryManagementSystem.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-namespace LibraryManagementSystem.Controllers
+﻿namespace LibraryManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,8 +10,6 @@ namespace LibraryManagementSystem.Controllers
         {
             this.service = service;
         }
-
-
 
         #region GetCategoriesAsync
         [HttpGet]
@@ -36,7 +27,7 @@ namespace LibraryManagementSystem.Controllers
             var result = await service.GetCategoryById(id);
             return Ok(result);
         }
-        #endregion
+        #endregion 
 
 
         //#region GetCategoryAsync
