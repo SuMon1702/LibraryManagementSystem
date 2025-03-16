@@ -1,6 +1,5 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Repositories;
