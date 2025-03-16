@@ -1,11 +1,5 @@
 ﻿using LibraryManagementSystem.Dtos;
-using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Models;
-using LibraryManagementSystem.Services;
-using Microsoft.AspNetCore.Mvc;
-
-
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -13,15 +7,12 @@ namespace LibraryManagementSystem.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-
         private readonly IAdminService _service;
-
 
        public AdminController(IAdminService service)
         {
             _service = service;
         }
-
 
         #region GetAdminsAsync
         [HttpGet]
@@ -32,7 +23,6 @@ namespace LibraryManagementSystem.Controllers
             return Ok(result);
         }
         #endregion
-
 
         #region GetAdminAsync
         [HttpGet("{id}")]
