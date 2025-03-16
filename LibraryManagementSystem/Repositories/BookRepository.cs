@@ -1,6 +1,4 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Repositories
@@ -36,9 +34,5 @@ namespace LibraryManagementSystem.Repositories
             }
             return Result<TblBook?>.Success(item, "Success");
         }
-
-
-
-
     }
 }
