@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LibraryManagementSystem.Models;
-using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Services;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+﻿using LibraryManagementSystem.LibraryManagement.Utlis;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -43,9 +37,6 @@ namespace LibraryManagementSystem.Controllers
                 //{
                 //    return Result<IEnumerable<TblBook>>.Success(book);
                 //}
-            
-
-           
         }
         #endregion
 
@@ -54,8 +45,6 @@ namespace LibraryManagementSystem.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
         {
-           
-            
                 var book = await service.GetBookAsync(id);
                 return Ok(book);
 
@@ -67,9 +56,6 @@ namespace LibraryManagementSystem.Controllers
 
                 //result = Result<TblBook>.Success(book);
                 //return result;
-
-            
-            
         }
         #endregion
 
