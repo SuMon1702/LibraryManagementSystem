@@ -1,5 +1,4 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Repositories;
 
 namespace LibraryManagementSystem.Services
@@ -19,7 +18,6 @@ namespace LibraryManagementSystem.Services
             return Result<List<TblCategory>>.Success(category.Data!);
 
         }
-
         public async Task<Result<TblCategory>> GetCategoryById(int id)
         {
             var category = await _categoryRepository.GetCategoryById(id);
