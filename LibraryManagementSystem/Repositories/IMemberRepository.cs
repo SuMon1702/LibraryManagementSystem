@@ -5,6 +5,6 @@ namespace LibraryManagementSystem.Repositories
     public interface IMemberRepository
     {
         Task<Result<List<TblMember?>>> GetMembersAsync(CancellationToken cs);
-        Task<Result<TblMember?>> GetMemberByIDAsync(int id);
+        Task<Result<TblMember?>> GetMemberByIdAsync(int id);
     }
 }
