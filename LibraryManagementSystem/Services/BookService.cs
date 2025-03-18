@@ -18,9 +18,9 @@ namespace LibraryManagementSystem.Services
             return Result<List<TblBook>>.Success("Succeed");
         }
 
-        public async Task<Result<TblBook?>> GetBookAsync(int id)
+        public async Task<Result<TblBook?>> GetBookByIdAsync(int id)
         {
-            var book = await _bookRepository.GetBookAsync(id);
+            var book = await _bookRepository.GetBookByIdAsync(id);
             return Result<TblBook?>.Success("Succeed");
         }
 
