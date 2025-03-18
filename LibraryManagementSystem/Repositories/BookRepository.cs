@@ -25,7 +25,7 @@ namespace LibraryManagementSystem.Repositories
             return Result<List<TblBook?>>.Success(item!, "Success");
         }
 
-        public async Task<Result<TblBook?>> GetBookAsync(int id)
+        public async Task<Result<TblBook?>> GetBookByIdAsync(int id)
         {
             var item = await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id);
             if (item == null)
