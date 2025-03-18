@@ -26,7 +26,7 @@ namespace LibraryManagementSystem.Controllers
 
         #region GetAdminAsync
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblAdmin>> GetAdminAsync(int id)
+        public async Task<ActionResult<TblAdmin>> GetAdminByIdAsync(int id)
         {
             var result = await _service.GetAdminByIdAsync(id);
             return Ok(result);
