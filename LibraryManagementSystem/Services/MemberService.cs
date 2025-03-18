@@ -17,7 +17,7 @@ namespace LibraryManagementSystem.Services
 
         public async Task<Result<TblMember?>> GetMemberByIdAsync(int id)
         {
-            return await _memberRepository.GetMemberByIDAsync(id);
+            return await _memberRepository.GetMemberByIdAsync(id);
         }
     }
 }
