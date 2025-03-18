@@ -12,14 +12,14 @@ public class BorrowingRecordController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<TblBorrowingRecord>>> GetBorrowingRecords(CancellationToken cs)
+    public async Task<ActionResult<List<TblBorrowingRecord>>> GetBorrowingRecordsAsync(CancellationToken cs)
     {
         var result = await service.GetBorrowingRecordsAsync(cs);
         return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TblBorrowingRecord>> GetBorrowingRecordById(int id)
+    public async Task<ActionResult<TblBorrowingRecord>> GetBorrowingRecordByIdAsync(int id)
     {
         var result = await service.GetBorrowingRecordsByIdAsync(id);
         return Ok(result);
