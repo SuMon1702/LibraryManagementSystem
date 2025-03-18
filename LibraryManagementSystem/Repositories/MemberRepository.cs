@@ -18,7 +18,7 @@ namespace LibraryManagementSystem.Repositories
             return Result<List<TblMember?>>.Success(members!);
         }
 
-        public async Task<Result<TblMember?>> GetMemberByIDAsync(int id)
+        public async Task<Result<TblMember?>> GetMemberByIdAsync(int id)
         {
             var members = await _context.TblMembers.FirstOrDefaultAsync(x => x.MemberId == id);
             if (members is null)
