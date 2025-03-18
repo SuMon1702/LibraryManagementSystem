@@ -24,7 +24,7 @@
         [HttpGet("{id}")]
         public async Task<ActionResult<TblAdmin>> GetCategoryByIdAsync(int id)
         {
-            var result = await service.GetCategoryById(id);
+            var result = await service.GetCategoryByIdAsync(id);
             return Ok(result);
         }
         #endregion 
