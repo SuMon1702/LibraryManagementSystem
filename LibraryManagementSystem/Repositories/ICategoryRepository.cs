@@ -5,7 +5,7 @@ namespace LibraryManagementSystem.Repositories
     public interface ICategoryRepository
     {
         Task<Result<List<TblCategory?>>> GetCategoryAsync(CancellationToken cs);
-        Task<Result<TblCategory?>> GetCategoryById(int id);
+        Task<Result<TblCategory?>> GetCategoryByIdAsync(int id);
 
     }
 }
