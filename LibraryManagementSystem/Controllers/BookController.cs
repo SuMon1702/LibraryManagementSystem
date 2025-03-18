@@ -43,9 +43,9 @@ namespace LibraryManagementSystem.Controllers
         #region GetBookAsync
         // GET: api/Book/
         [HttpGet("{id}")]
-        public async Task<ActionResult<Result<TblBook>>> GetBookAsync(int id)
+        public async Task<ActionResult<Result<TblBook>>> GetBookByIdAsync(int id)
         {
-                var book = await service.GetBookAsync(id);
+                var book = await service.GetBookByIdAsync(id);
                 return Ok(book);
 
                 ////Since book is a single object (not a collection),don't need to use .Any().
