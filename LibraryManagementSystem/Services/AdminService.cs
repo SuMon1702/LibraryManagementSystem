@@ -42,15 +42,6 @@ public class AdminService : IAdminService
 
     public async Task<Result<TblAdmin>> AdminLogin(AdminLoginModel loginModel)
     {
-        if (loginModel == null)
-        {
-            return Result<TblAdmin>.Fail("Invalid Login");
-        }
-
-        if (string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Password))
-        {
-            return Result<TblAdmin>.Fail("Email and password fields cannot be empty.");
-        }
 
         var admin = await _adminRepository.AdminLogin(loginModel.Email, loginModel.Password);
 
