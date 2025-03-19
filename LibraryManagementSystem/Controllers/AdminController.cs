@@ -38,13 +38,19 @@ namespace LibraryManagementSystem.Controllers
         [HttpPost("admin_Login")]
         public async Task<ActionResult<TblAdmin>> AdminLogin([FromBody] AdminLoginModel login)
         {
+            // Automatically validates the model based on the annotations in AdminLoginModel
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);  // Return validation errors if the model is invalid
+            }
+
             var result = await _service.AdminLogin(login);
             return Ok(result);
         }
         #endregion
 
 
-        #region 
+        #region UpdateAdmin
         [HttpPut("{id}")]
         public async Task<ActionResult<TblAdmin>> UpdateAdmin(int id, AdminModel model)
         {
