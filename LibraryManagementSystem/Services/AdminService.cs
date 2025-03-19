@@ -50,7 +50,7 @@ public class AdminService : IAdminService
             return Result<TblAdmin>.Fail("Invalid email or password.");
         }
 
-        return Result<TblAdmin>.Success("Login successful");
+        return Result<TblAdmin>.Success("Admin Login is successful");
     }
 
 
