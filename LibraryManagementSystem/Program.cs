@@ -27,6 +27,19 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 
 var app = builder.Build();
 
+// Global Exception Handling Middleware
+app.UseExceptionHandler(config =>
+{
+    config.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+
+        var errorResponse = new { message = "An unexpected error occurred." };
+        await context.Response.WriteAsJsonAsync(errorResponse);
+    });
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
