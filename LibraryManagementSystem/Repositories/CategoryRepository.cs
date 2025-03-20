@@ -21,6 +21,10 @@ namespace LibraryManagementSystem.Repositories
         public async Task<Result<TblCategory?>> GetCategoryByIdAsync(int id)
         {
             var category = await _context.TblCategories.FirstOrDefaultAsync(x => x.CategoryId == id);
+            if (category is null)
+            {
+                return Result<TblCategory?>.Fail("Category not found.");
+            }
             return Result<TblCategory?>.Success(category);
         }
     }
