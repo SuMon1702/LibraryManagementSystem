@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//builder.Services.AddControllers();
+// Add services to the container
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -25,6 +24,7 @@ builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 // Register Service
 builder.Services.AddScoped<IAdminService, AdminService>();
 
+
 var app = builder.Build();
 
 // Global Exception Handling Middleware
@@ -39,6 +39,8 @@ app.UseExceptionHandler(config =>
         await context.Response.WriteAsJsonAsync(errorResponse);
     });
 });
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
