@@ -20,9 +20,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
-
-// Register Service
 builder.Services.AddScoped<IAdminService, AdminService>();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
 
 var app = builder.Build();
