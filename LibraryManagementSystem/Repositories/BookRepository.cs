@@ -16,19 +16,18 @@ namespace LibraryManagementSystem.Repositories
         {
             var item = await _context.TblBooks.ToListAsync(cs);
             
-            if (item == null)
+            if (item is null)
             {
                 return Result<List<TblBook?>>.Fail("No data found.");
 
             }
-
             return Result<List<TblBook?>>.Success(item!, "Success");
         }
 
         public async Task<Result<TblBook?>> GetBookByIdAsync(int id)
         {
             var item = await _context.TblBooks.FirstOrDefaultAsync(x => x.BookId == id);
-            if (item == null)
+            if (item is null)
             {
                 return Result<TblBook?>.Fail("No data found.");
             }
