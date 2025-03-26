@@ -20,7 +20,7 @@
         }
         #endregion
 
-        #region GetCategoryAsync
+        #region GetCategoryByIdAsync
         [HttpGet("{id}")]
         public async Task<ActionResult<TblAdmin>> GetCategoryByIdAsync(int id)
         {
