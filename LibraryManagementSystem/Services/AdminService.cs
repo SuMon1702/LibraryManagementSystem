@@ -1,6 +1,6 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis;
 using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Repositories;
+using LibraryManagementSystem.Repositories.Interfaces;
 
 namespace LibraryManagementSystem.Services;
 
