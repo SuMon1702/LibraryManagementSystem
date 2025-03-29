@@ -1,9 +1,3 @@
-using LibraryManagementSystem.Models;
-using LibraryManagementSystem.Repositories.Implementations;
-using LibraryManagementSystem.Repositories.Interfaces;
-using LibraryManagementSystem.Services;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
