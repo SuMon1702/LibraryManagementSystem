@@ -1,9 +1,4 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
-namespace LibraryManagementSystem.Repositories.Implementations;
+﻿namespace LibraryManagementSystem.Repositories.Implementations;
 
 public class AdminRepository : IAdminRepository
 {
