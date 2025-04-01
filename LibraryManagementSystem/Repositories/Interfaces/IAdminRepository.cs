@@ -1,7 +1,4 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Model;
-
-namespace LibraryManagementSystem.Repositories.Interfaces
+﻿namespace LibraryManagementSystem.Repositories.Interfaces
 {
     public interface IAdminRepository
     {
