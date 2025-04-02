@@ -1,6 +1,4 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-
-namespace LibraryManagementSystem.Repositories.Interfaces
+﻿namespace LibraryManagementSystem.Repositories.Interfaces
 {
     public interface IMemberRepository
     {
