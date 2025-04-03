@@ -1,8 +1,4 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Model;
-using LibraryManagementSystem.Repositories.Interfaces;
-
-namespace LibraryManagementSystem.Services;
+﻿namespace LibraryManagementSystem.Services;
 
 public class AdminService : IAdminService
 {
