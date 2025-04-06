@@ -1,6 +1,4 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-
-namespace LibraryManagementSystem.Services
+﻿namespace LibraryManagementSystem.Services
 {
     public interface IBorrowingRecordService
     {
