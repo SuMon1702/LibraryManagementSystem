@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace LibraryManagementSystem.Models;
+﻿namespace LibraryManagementSystem.Models;
 
 public partial class AppDbContext : DbContext
 {
