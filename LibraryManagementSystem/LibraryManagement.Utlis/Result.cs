@@ -1,55 +1,56 @@
 ﻿using LibraryManagementSystem.LibraryManagement.Utlis.Enums;
 
-namespace LibraryManagementSystem.LibraryManagement.Utlis;
-
-public class Result<T>
+namespace LibraryManagementSystem.LibraryManagement.Utlis
 {
-    public T? Data { get; set; }
-    public bool IsSuccess { get; set; }
-    public EnumHttpStatusCode StatusCode { get; set; }
-    public string? Message { get; set; }
-
-    public static Result<T> Success (string message="Success")
+    public class Result<T>
     {
-        return new Result<T>
-        {
-            Message = message,
-            IsSuccess = true,
-            StatusCode = EnumHttpStatusCode.Success,
-        };
-    }
+        public T? Data { get; set; }
+        public bool IsSuccess { get; set; }
+        public EnumHttpStatusCode StatusCode { get; set; }
+        public string? Message { get; set; }
 
-    public static Result<T> Success (T data, string message="Success")
-    {
-        return new Result<T>
+        public static Result<T> Success (string message="Success")
         {
-            Data = data,
-            IsSuccess = true,
-            StatusCode = EnumHttpStatusCode.Success,
-            Message = message
-        };
-    }
+            return new Result<T>
+            {
+                Message = message,
+                IsSuccess = true,
+                StatusCode = EnumHttpStatusCode.Success,
+            };
+        }
 
-    public static Result<T> Fail(string message="Fail")
-    {
-        return new Result<T>
+        public static Result<T> Success (T data, string message="Success")
         {
-            Message = message,
-            StatusCode = EnumHttpStatusCode.BadRequest,
-            IsSuccess = false
-        };
-    }
+            return new Result<T>
+            {
+                Data = data,
+                IsSuccess = true,
+                StatusCode = EnumHttpStatusCode.Success,
+                Message = message
+            };
+        }
 
-    public static Result<T> Fail (Exception ex)
-    {
-        return new Result<T>
+        public static Result<T> Fail(string message="Fail")
         {
-            Message = ex.Message,
-            StatusCode = EnumHttpStatusCode.InternalServerError,
-            IsSuccess = false
-        };
-    }
+            return new Result<T>
+            {
+                Message = message,
+                StatusCode = EnumHttpStatusCode.BadRequest,
+                IsSuccess = false
+            };
+        }
+
+        public static Result<T> Fail (Exception ex)
+        {
+            return new Result<T>
+            {
+                Message = ex.Message,
+                StatusCode = EnumHttpStatusCode.InternalServerError,
+                IsSuccess = false
+            };
+        }
     
+    }
+
+
 }
-
-
