@@ -1,8 +1,7 @@
-﻿namespace LibraryManagementSystem.Repositories.Interfaces
+﻿namespace LibraryManagementSystem.Repositories.Interfaces;
+
+public interface IBookRepository
 {
-    public interface IBookRepository
-    {
-        Task<Result<List<TblBook?>>> GetAllBooksAsync(CancellationToken cs);
-        Task<Result<TblBook?>> GetBookByIdAsync(int id);
-    }
+    Task<Result<List<TblBook?>>> GetAllBooksAsync(CancellationToken cs);
+    Task<Result<TblBook?>> GetBookByIdAsync(int id);
 }
