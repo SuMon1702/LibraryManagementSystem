@@ -1,5 +1,4 @@
 ﻿using LibraryManagementSystem.Dtos;
-using LibraryManagementSystem.Model;
 
 namespace LibraryManagementSystem.Controllers
 {
