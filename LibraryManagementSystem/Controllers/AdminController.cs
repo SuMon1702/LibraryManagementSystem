@@ -1,6 +1,4 @@
-﻿using LibraryManagementSystem.Dtos;
-
-namespace LibraryManagementSystem.Controllers
+﻿namespace LibraryManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
