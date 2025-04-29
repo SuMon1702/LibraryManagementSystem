@@ -6,3 +6,4 @@ global using LibraryManagementSystem.Repositories.Interfaces;
 global using Microsoft.EntityFrameworkCore;
 global using LibraryManagementSystem.LibraryManagement.Utlis;
 global using LibraryManagementSystem.Model;
+global using LibraryManagementSystem.Dtos;
