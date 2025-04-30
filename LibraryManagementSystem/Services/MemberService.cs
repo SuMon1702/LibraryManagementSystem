@@ -1,7 +1,4 @@
-﻿using LibraryManagementSystem.LibraryManagement.Utlis;
-using LibraryManagementSystem.Repositories.Interfaces;
-
-namespace LibraryManagementSystem.Services
+﻿namespace LibraryManagementSystem.Services
 {
     public class MemberService : IMemberService
     {
